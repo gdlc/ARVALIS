@@ -16,5 +16,5 @@
   
   fm=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)
   summary(fm)
-```R
+```
 hELLO
