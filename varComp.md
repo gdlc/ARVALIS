@@ -17,3 +17,4 @@
   fm=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)
   summary(fm)
 ```
+[Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
