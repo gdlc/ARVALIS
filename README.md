@@ -2,6 +2,6 @@
 
 **Contact**: gdeloscampos@gmail.com  malctony@hotmail.com
 
-* *Data*
-* *[Module 1: G-Matrix]*()
+* *[Module 1: Estimation of variance components using lmer]()
+
 
