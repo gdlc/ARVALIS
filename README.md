@@ -2,6 +2,6 @@
 
 **Contact**: gdeloscampos@gmail.com  malctony@hotmail.com
 
-* *[Module 1: Estimation of variance components using lmer]()
+* *[Module 1: Variance Components (lmer)](https://github.com/gdlc/ARVALIS/blob/master/varComp.md)*
 
 
