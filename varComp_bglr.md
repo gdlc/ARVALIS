@@ -19,6 +19,8 @@
  
   Y$YEARxLOC=paste(Y$YEAR,"x",Y$LOC)
   Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
+  
+  
   fmLMER=lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
                (1|YEARxREGION)+(1|YEARxLOC),data=Y)  
  
