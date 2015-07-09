@@ -1,4 +1,4 @@
-### Variance Components & basic GxE analysis
+### Variance Components BGLR vs lmer
 
   For the analyses involving markers and env. covariates we will use BGLR. Before que fit more complex models we compare the estimates of variance components of simpler models obtained with lme4 and BGLR.
 
