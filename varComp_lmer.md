@@ -1,4 +1,4 @@
-### Variance Components & basic GxE analysis
+### Variance Components 
 
 In this module we use the lme4 package to fit a mixed effects model for yield. We fit three models models
 
@@ -6,7 +6,7 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
    
    fm2:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + Error 
    
-   fm3:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + VARxREGION(random) + Error 
+   fm3:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + YEARxREGION(random) + Error 
    
 ```R
 ## Parameters
@@ -21,7 +21,8 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
 
   fm1=lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  ## Additive model no GxE
   fm2=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
-  fm3=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC)+(VAR|REGION),data=Y)  ## Adding GxE (VARxREGION)
+  fm2=lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
+               (1|YEAR_REGION)+(1|YEAR_LOC),data=Y)  
   summary(fm1)
   summary(fm2)
   summary(fm3)
