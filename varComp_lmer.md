@@ -15,7 +15,7 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
   phenoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/Y.rda' 
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/varComp_lmer/'
  ###
-
+ dir.create(outputFolder)
  load(phenoFile)
  library(lme4)
  Y$YEARxLOC=paste(Y$YEAR,"x",Y$LOC)
