@@ -22,13 +22,15 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
  Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
 
   fm1=lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  ## Additive model no GxE
+
   fm2=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
-  fm2=lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
+
+  fm3=lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
                (1|YEARxREGION)+(1|YEARxLOC),data=Y)  
   summary(fm1)
   summary(fm2)
   summary(fm3)
-  save(fm,file=paste0(outputFolder,'fm.RData'))
+  save(fm3,file=paste0(outputFolder,'fm.RData'))
   
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
