@@ -2,8 +2,10 @@
 
 In this module we use the lme4 package to fit a mixed effects model for yield. We fit three models models
 
-   fm1:  y=YEAR(fixed) + VAR(random) + LOC(random) + Error  
+   fm1:  y=YEAR(fixed) + VAR(random) + LOC(random) + Error 
+   
    fm2:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + Error 
+   
    fm3:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + VARxREGION(random) + Error 
    
 ```R
