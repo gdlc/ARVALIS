@@ -35,7 +35,7 @@
       )
       
       
-  fmBGLR=BGLR(y=Y$rdt,ETA=LP,nIter=32000,burnIn=2000,Tthin=10)  
+  fmBGLR=BGLR(y=Y$rdt,ETA=LP,nIter=32000,burnIn=2000,thin=10)  
  
   summary(fmLMER)
   
