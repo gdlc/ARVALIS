@@ -31,9 +31,9 @@
  varExp <- PC$sdev^2
  varExp <- 100*varExp/sum(varExp)
  par(mfrow=c(1,2))
-plot(PC$scores[,1],PC$scores[,2],main="PC 1 vs PC 2", xlab="PC 1",ylab="PC 2")
-plot(cumsum(varExp[1:20]),main="Cumulated explained variance",ylab="% of Total",xlab="PC (Top 20)")
-abline(h=60,lty=2,col="red")
+ plot(PC$scores[,1],PC$scores[,2],main="PC 1 vs PC 2", xlab="PC 1",ylab="PC 2")
+ plot(cumsum(varExp[1:20]),main="Cumulated explained variance",ylab="% of Total",xlab="PC (Top 20)")
+ abline(h=60,lty=2,col="red")
 
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
