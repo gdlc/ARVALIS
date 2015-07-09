@@ -21,7 +21,7 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
  Y$YEARxLOC=paste(Y$YEAR,"x",Y$LOC)
  Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
 
-  fm1=lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  ## Additive model no GxE
+  fm1=lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  
 
   fm2=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
 
