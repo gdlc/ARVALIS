@@ -1,5 +1,11 @@
-###Estimates variance components using lme4
+### Variance Components & basic GxE analysis
 
+In this module we use the lme4 package to fit a mixed effects model for yield. We fit three models models
+
+   fm1:  y=YEAR(fixed) + VAR(random) + LOC(random) + Error  
+   fm2:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + Error 
+   fm3:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + VARxREGION(random) + Error 
+   
 ```R
 ## Parameters
   genoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/X_2012_2014.rda'
@@ -8,15 +14,16 @@
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/varComp/'
  ###
 
-
  load(phenoFile)
-  
  library(lme4)
-  
- ## Mixed model with Year as fixed effect, Var, REGION and LOC-within-REGION as random
-  
-  fm=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)
-  summary(fm)
+
+  fm1=lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  ## Additive model no GxE
+  fm2=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
+  fm3=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC)+(VAR|REGION),data=Y)  ## Adding GxE (VARxREGION)
+  summary(fm1)
+  summary(fm2)
+  summary(fm3)
   save(fm,file=paste0(outputFolder,'fm.RData'))
+  
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
