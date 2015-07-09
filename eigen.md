@@ -10,7 +10,7 @@
  ###
 
  load(genoFile)
- library(envCovFile)
+ load(envCovFile)
 
 
 ```
