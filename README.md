@@ -13,7 +13,7 @@ The modules are based on R ([download](http://cran.r-project.org)). Before you s
 
 ```R
   install.packages("BGLR",repos="http://cran.r-project.org")
-  install.packages("lme4",repos=""http://cran.r-project.org")
+  install.packages("lme4",repos="http://cran.r-project.org")
 ```
 
 
