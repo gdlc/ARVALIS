@@ -1,8 +1,18 @@
 ## Pipelines for GxE Analysis using Markers & Env. Covariates
 
-This repository present a set of modules for analysis of data from multi-environment trials using genotype (SNP) and environmental covariates. The methods presented here are largley based on [Jarquin et al. (2014)](http://link.springer.com/article/10.1007%2Fs00122-013-2243-1#page-1). The project has ben funded by [Arvalis](http://www.arvalisinstitutduvegetal.fr/index.html) and the methodological developments have been led by [Gustavo de los Campos](), other contributors are listed in [Jarquin et al. (2014)](http://link.springer.com/article/10.1007%2Fs00122-013-2243-1#page-1).
+This repository present a set of modules for analysis of data from multi-environment trials using genotype (SNP) and environmental covariates. The methods presented here are largley based on [Jarquin et al. (2014)](http://link.springer.com/article/10.1007%2Fs00122-013-2243-1#page-1). The project has ben funded by [Arvalis](http://www.arvalisinstitutduvegetal.fr/index.html) (PI: G. de los Campos).
 
 **Contact**:  Gustavo de los Campos [ gdeloscampos@gmail.com ] &  Marco Lopez-Cruz [ malctony@hotmail.com ]
+
+#####Before you start
+
+The modules are based on R ([download](http://cran.r-project.org)). Before you start, be sure to install the packages [BGLR](http://cran.r-project.org/web/packages/BGLR/index.html) and [lme4](http://cran.r-project.org/web/packages/lme4/index.html).
+
+```R
+  install.packages("BGLR",repos="http://cran.r-project.org")
+  install.packages("lme4",repos=""http://cran.r-project.org")
+```R
+
 
 #####Modules:
 
