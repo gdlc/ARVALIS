@@ -4,7 +4,7 @@ This repository present a set of modules for analysis of data from multi-environ
 
 **Contact**:  Gustavo de los Campos [ gdeloscampos@gmail.com ] &  Marco Lopez-Cruz [ malctony@hotmail.com ]
 
-**Modules**:
+#####Modules:
 
 * [Module 1: Variance Components (lmer)](https://github.com/gdlc/ARVALIS/blob/master/varComp_lmer.md)
 * [Module 2: Variance Components (BGLR)](https://github.com/gdlc/ARVALIS/blob/master/varComp_bglr.md)
