@@ -72,5 +72,4 @@
  dev.off()
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
-
-[See PDF PrinComp] (https://github.com/gdlc/ARVALIS/blob/master/eigenAnalysis.pdf)
+[See PDF PrinComp](https://github.com/gdlc/ARVALIS/blob/master/eigenAnalysis.pdf)
