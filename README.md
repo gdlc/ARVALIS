@@ -8,7 +8,7 @@ This repository present a set of modules for analysis of data from multi-environ
 
 #####Before you start
 
-The modules are based on R ([download](http://cran.r-project.org)). Before you start, be sure to install the packages [BGLR](http://cran.r-project.org/web/packages/BGLR/index.html) and [lme4](http://cran.r-project.org/web/packages/lme4/index.html).
+The modules are based on R (>=3.1.0 [download](http://cran.r-project.org)). Before you start, be sure to install the packages [BGLR](http://cran.r-project.org/web/packages/BGLR/index.html) and [lme4](http://cran.r-project.org/web/packages/lme4/index.html).
 
 ```R
   install.packages("BGLR",repos="http://cran.r-project.org")
