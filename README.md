@@ -1,7 +1,5 @@
 ## Pipelines for GxE Analysis using Markers & Env. Covariates
 
-[link a pdf](https://github.com/gdlc/ARVALIS/blob/master/PC_analysis_G.pdf)
-
 This repository present a set of modules for analysis of data from multi-environment trials using genotype (SNP) and environmental covariates. The methods presented here are largley based on [Jarquin et al. (2014)](http://link.springer.com/article/10.1007%2Fs00122-013-2243-1#page-1). The project has ben funded by [Arvalis](http://www.arvalisinstitutduvegetal.fr/index.html) (PI: G. de los Campos).
 
 **Contact**:  Gustavo de los Campos [ gdeloscampos@gmail.com ] &  Marco Lopez-Cruz [ malctony@hotmail.com ]
