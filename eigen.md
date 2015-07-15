@@ -76,4 +76,3 @@
 Plots produced by the above-script.
 
 ![ScreenShot](https://raw.githubusercontent.com/gdlc/ARVALIS/master/eigenAnalysis.pdf)
-
