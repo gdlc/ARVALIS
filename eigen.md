@@ -75,4 +75,4 @@
 
 Plots produced by the above-script.
 
-![ScreenShot](https://raw.githubusercontent.com/gdlc/ARVALIS/master/eigenAnalysis.pdf)
+![ScreenShot](https://github.com/gdlc/ARVALIS/blob/master/PC_analysis_G.pdf)
