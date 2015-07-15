@@ -73,4 +73,6 @@
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
 
-[See PDF PrinComp](https://github.com/gdlc/ARVALIS/blob/master/eigenAnalysis.pdf)
+Plots produced by the above-script.
+
+![ScreenShot](https://github.com/gdlc/ARVALIS/blob/master/eigenAnalysis.pdf)
