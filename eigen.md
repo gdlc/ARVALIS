@@ -75,5 +75,5 @@
 
 Plots produced by the above-script.
 
-[ScreenShot](https://github.com/gdlc/ARVALIS/blob/master/eigenAnalysis.pdf)
+![ScreenShot](https://raw.githubusercontent.com/gdlc/ARVALIS/blob/master/eigenAnalysis.pdf)
 
