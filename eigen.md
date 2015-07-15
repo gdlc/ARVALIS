@@ -74,6 +74,7 @@
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
 
 Plots produced by the above-script.
+
 ![ScreenShot](https://github.com/fenciso13/GWAS_and_GS/blob/master/pdf/Scab_plot.png)
 
 ![ScreenShot](https://github.com/gdlc/ARVALIS/blob/master/PC_analysis_G.pdf)
