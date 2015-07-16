@@ -19,15 +19,16 @@
 
  ##
    IDs=intersect(Y$VAR,rownames(X))
-   Y=Y[Y$VAR%in%IDs,]
-   W=W_No_ctr_std[Y$VAR%in%IDs,]
+   index <- Y$VAR%in%IDs
+   Y=Y[index,]
+   W=W_No_ctr_std[index,]
    X=X[IDs,];   stopifnot(all(Y$VAR%in%rownames(X))); stopifnot(all(rownames(X)%in%Y$VAR)) 
 
  ### Model 1: Additive model (without markers)
   ETA=list(ENV=list(~factor(Y$ENV)-1,model='BRR'),
            VAR=list(~factor(Y$VAR)-1,model='BRR')
           )
-  fmL=BGLR(y=Y$rdt,ETA=ETA,saveAt='EL_',nIter=nIter,burnIn=burnIn)
+  fm1=BGLR(y=Y$rdt,ETA=ETA,saveAt='EL_',nIter=nIter,burnIn=burnIn)
  
  
  ### Model 2: Additive model (with markers)
@@ -39,17 +40,25 @@
   for(i in 1:ncol(PC)) PC[,i] <- PC[,i]*sqrt(SVD$values)
   PC=PC[myIndex,]
   ETA$VAR=list(X=PC,model='BRR')
-  fmLM=BGLR(y=Y$rdt,ETA=ETA,saveAt='EM_',nIter=nIter,burnIn=burnIn)
+  fm2=BGLR(y=Y$rdt,ETA=ETA,saveAt='EM_',nIter=nIter,burnIn=burnIn)
 
  
  ### Model 3: Additive model (with markers and env. cov.)
   W=scale(W)
   ETA$COV=list(X=W, model='BRR')
+  fm3=BGLR(y=Y$rdt,ETA=ETA,saveAt='EMW_',nIter=nIter,burnIn=burnIn)
   
   
- ### Model 4: GxE Model 1 (Model 3 + interactions between markers and env. covariates).
+ ### Model 4: GxE Model 1 (Model 3 + interactions between markers and env. covariates)
+  S <- tcrossprod(W)
+  GW <- G[myIndex,myIndex]*S
+  SVD <- eigen(GW)
+  ETA$WG=list(V=SVD$vectors,d=SVD$values, model='RKHS')
+  fm4=BGLR(y=Y$rdt,ETA=ETA,saveAt='EMW1_',nIter=nIter,burnIn=burnIn)
 
- ### Model 5: GxE Model 2 (Model 3 + interactions between markers and environments).
+
+ ### Model 5: GxE Model 2 (Model 3 + interactions between markers and environments)
+
 
 ```
  
