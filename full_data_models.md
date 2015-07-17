@@ -14,9 +14,9 @@
  dir.create(outputFolder) 
  setwd(outputFolder)
  load(genoFile) ; load(envCovFile); load(phenoFile)
- OUT=matrix(nrow=5,ncol=4,NA)
- colnames(OUT)=c('Eror','G','E','GxE')
-
+ OUT=matrix(nrow=4,ncol=5,NA)
+ colnames(OUT)=c('E','G','W','GxW','Error')
+ rownames(OUT)=c('EL','EG','EGW','EGW_GxW')
  ##
    IDs=intersect(Y$VAR,rownames(X))
    index <- Y$VAR%in%IDs
@@ -28,8 +28,10 @@
   ETA=list(ENV=list(~factor(Y$ENV)-1,model='BRR'),
            VAR=list(~factor(Y$VAR)-1,model='BRR')
           )
-  fm1=BGLR(y=Y$rdt,ETA=ETA,saveAt='EL_',nIter=nIter,burnIn=burnIn)
- 
+  fmEL=BGLR(y=Y$rdt,ETA=ETA,saveAt='EL_',nIter=nIter,burnIn=burnIn)
+  OUT['EL','E']=fmEL$ETA$ENV$varB
+  OUT['EL','G']=fmEL$ETA$VAR$varB
+  OUT['EL','Error']=fmEL$varE
  
  ### Model 2: Additive model (with markers)
   G <- tcrossprod(scale(X))/ncol(X)
@@ -40,24 +42,39 @@
   for(i in 1:ncol(PC)) PC[,i] <- PC[,i]*sqrt(SVD$values)
   PC=PC[myIndex,]
   ETA$VAR=list(X=PC,model='BRR')
-  fm2=BGLR(y=Y$rdt,ETA=ETA,saveAt='EM_',nIter=nIter,burnIn=burnIn)
+  fmEG=BGLR(y=Y$rdt,ETA=ETA,saveAt='EG_',nIter=nIter,burnIn=burnIn)
+  OUT['EG','E']=fmEG$ETA$ENV$varB
+  OUT['EG','G']=fmEG$ETA$VAR$varB
+  OUT['EG','Error']=fmEG$varE
 
- 
  ### Model 3: Additive model (with markers and env. cov.)
   W=scale(W)
   ETA$COV=list(X=W, model='BRR')
-  fm3=BGLR(y=Y$rdt,ETA=ETA,saveAt='EMW_',nIter=nIter,burnIn=burnIn)
-  
+  fmEGW=BGLR(y=Y$rdt,ETA=ETA,saveAt='EGW_',nIter=nIter,burnIn=burnIn)
+  OUT['EGW','E']=fmEGW$ETA$ENV$varB
+  OUT['EGW','G']=fmEGW$ETA$VAR$varB
+  OUT['EGW','W']=fmEGW$ETA$COV$varB
+  OUT['EGW','Error']=fmEGW$varE
   
  ### Model 4: GxE Model 1 (Model 3 + interactions between markers and env. covariates)
-  S <- tcrossprod(W)
-  GW <- G[myIndex,myIndex]*S
-  SVD <- eigen(GW)
-  ETA$WG=list(V=SVD$vectors,d=SVD$values, model='RKHS')
-  fm4=BGLR(y=Y$rdt,ETA=ETA,saveAt='EMW1_',nIter=nIter,burnIn=burnIn)
-
-
- ### Model 5: GxE Model 2 (Model 3 + interactions between markers and environments)
+  Omega <- tcrossprod(W)/ncol(W)
+  GxW <- G[myIndex,myIndex]*Omega
+  EVD <- eigen(GxW)
+  PC<-EVD$vectors[,EVD$values>1e-5]
+  for(i in 1:ncol(PC)){
+    PC[,i]=EVD$vectors[,i]*sqrt(EVD$values[i])
+  }
+  
+  ETA$GxW=list(X=PC, model='BRR')
+  fmEGW_GxW=BGLR(y=Y$rdt,ETA=ETA,saveAt='EGW_GxW_',nIter=nIter,burnIn=burnIn)
+  OUT['EGW_GxW','E']=fmEGW_GxW$ETA$ENV$varB
+  OUT['EGW_GxW','G']=fmEGW_GxW$ETA$VAR$varB
+  OUT['EGW_GxW','W']=fmEGW_GxW$ETA$COV$varB
+  OUT['EGW_GxW','GxW']=fmEGW_GxW$ETA$GxW$varB
+  OUT['EGW_GxW','Error']=fmEGW_GxW$varE
+  
+  
+  OUT[4,5]=fmEGW_GxW$varE
 
 
 ```
