@@ -34,7 +34,8 @@
   OUT['EL','Error']=fmEL$varE
  
  ### Model 2: Additive model (with markers)
-  G <- tcrossprod(scale(X))/ncol(X)
+  G <- tcrossprod(scale(X))
+  G<-G/mean(diag(G))
   myIndex=as.integer(factor(x=Y$VAR,ordered=T,levels=rownames(G)))
   myIndex <- match(Y$VAR,rownames(G))
   SVD <- eigen(G)
@@ -56,8 +57,9 @@
   OUT['EGW','W']=fmEGW$ETA$COV$varB
   OUT['EGW','Error']=fmEGW$varE
   
- ### Model 4: GxE Model 1 (Model 3 + interactions between markers and env. covariates)
-  Omega <- tcrossprod(W)/ncol(W)
+ ### Model 4: GxW Model 1 (Model 3 + interactions between markers and env. covariates)
+  Omega <- tcrossprod(W)
+  Omega<-Omega/mean(diag(Omega))
   GxW <- G[myIndex,myIndex]*Omega
   EVD <- eigen(GxW)
   PC<-EVD$vectors[,EVD$values>1e-5]
