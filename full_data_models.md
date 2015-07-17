@@ -76,10 +76,17 @@
   OUT['EGW_GxW','Error']=fmEGW_GxW$varE
   
   round(OUT,3)
-  
-  
+
 ```
  
+Estimated Variace Components
 
+              E      G      W   GxW  Error
+----------------------------------------------
+EL      201.562 14.624     --    -- 22.651
+EG      201.738 24.751     --    -- 22.701
+EGW     143.213 25.093 40.783    -- 22.628
+EGW_GxW 146.694 21.254 34.464 6.125 18.305
+----------------------------------------------
 
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
