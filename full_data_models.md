@@ -48,7 +48,7 @@
   OUT['EG','Error']=fmEG$varE
 
  ### Model 3: Additive model (with markers and env. cov.)
-  W=scale(W)
+  W=scale(W)/sqrt(ncol(W))
   ETA$COV=list(X=W, model='BRR')
   fmEGW=BGLR(y=Y$rdt,ETA=ETA,saveAt='EGW_',nIter=nIter,burnIn=burnIn)
   OUT['EGW','E']=fmEGW$ETA$ENV$varB
@@ -73,10 +73,9 @@
   OUT['EGW_GxW','GxW']=fmEGW_GxW$ETA$GxW$varB
   OUT['EGW_GxW','Error']=fmEGW_GxW$varE
   
+  round(OUT,3)
   
-  OUT[4,5]=fmEGW_GxW$varE
-
-
+  
 ```
  
 
