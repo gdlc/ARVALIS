@@ -15,7 +15,7 @@ The modules are based on R (>=3.1.0 [download](http://cran.r-project.org)). Befo
 
 
 #####Modules:
-
+* [Module 0: Preparing inputs](https://github.com/gdlc/ARVALIS/blob/master/getInputs.md)
 * [Module 1: Variance Components (lmer)](https://github.com/gdlc/ARVALIS/blob/master/varComp_lmer.md)
 * [Module 2: Variance Components (BGLR)](https://github.com/gdlc/ARVALIS/blob/master/varComp_bglr.md)
 * [Module 3: Structure of genotypes and of environments](https://github.com/gdlc/ARVALIS/blob/master/eigen.md)
