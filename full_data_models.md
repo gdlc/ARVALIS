@@ -8,7 +8,7 @@
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/full_data_models/'
  
   library(BGLR)
-  nIter=12000; burnIn=2000
+  nIter=1200; burnIn=200
  ###
  
  dir.create(outputFolder) 
