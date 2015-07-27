@@ -1,4 +1,4 @@
-## Full-data  analysis
+## Cross validation 1 and 2
 
 ```R
  ## Parameters
