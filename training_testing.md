@@ -1,9 +1,9 @@
 ## Cross validation 1 and 2
 
-**Cross validation 1**
+**Cross validation 1**.
 Newly developed lines. Random assigns lines to folds. All the records for a given line are assigned to the same fold.
  
-**Cross validation 2** 
+**Cross validation 2**.
 To assess the ability of models to predict the performance of lines using the data collected in other environments.
  
 ```R
