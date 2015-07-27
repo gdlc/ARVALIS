@@ -45,7 +45,7 @@
   
  ### Model 4: GxW Model 1 (Model 3 + interactions between markers and env. covariates)
   load(inputETA)
-  ETA <- ETA$ETA14
+  ETA <- ETA$ETA4
   fmEGW_GxW <- BGLR(y=Y$rdt,ETA=ETA,saveAt='EGW_GxW_',nIter=nIter,burnIn=burnIn)
   OUT['EGW_GxW','E']=fmEGW_GxW$ETA$ENV$varB
   OUT['EGW_GxW','G']=fmEGW_GxW$ETA$VAR$varB
