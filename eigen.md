@@ -9,8 +9,7 @@
  
  dir.create(outputFolder) 
  setwd(outputFolder)
- load(genoFile)
- load(envCovFile)
+ load(inputFile)
  
  pdf('eigenAnalysis.pdf')
  ### Genotypes ###################################
