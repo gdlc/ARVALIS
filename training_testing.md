@@ -11,10 +11,11 @@ To assess the ability of models to predict the performance of lines using the da
   inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
   inputETA='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/ETA.RData'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/cross_validation/'
+  
   CV <- 1
-  library(BGLR)
   nIter=1200; burnIn=200
  ###
+ library(BGLR)
  
  dir.create(outputFolder) 
  setwd(outputFolder)
