@@ -9,23 +9,21 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
    fm3:  y=YEAR(fixed) + VAR(random) + REGION(random) + LOC-within Region(random) + YEARxREGION(random) + Error 
    
 ```R
-## Parameters
-  genoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/X_2012_2014.rda'
-  envCovFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/W_No_ctr_std.rda' 
-  phenoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/Y.rda' 
+ ## Parameters. 'inputFolder' was previously saved with X,Y,W and G matrices
+  inputFile='/Users/epidemiology/Documents/Biostatistics/ARVALIS/PIPELINE_2014/input/standardized_data.RData'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/varComp_lmer/'
  ###
  dir.create(outputFolder)
- load(phenoFile)
+ load(inputFile)
  library(lme4)
  Y$YEARxLOC=paste(Y$YEAR,"x",Y$LOC)
  Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
 
-  fm1=lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  
+  fm1 <- lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  
 
-  fm2=lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
+  fm2 <- lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
 
-  fm3=lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
+  fm3 <- lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
                (1|YEARxREGION)+(1|YEARxLOC),data=Y)  
   summary(fm1)
   summary(fm2)
