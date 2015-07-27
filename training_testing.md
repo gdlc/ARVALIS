@@ -10,8 +10,8 @@ To assess the ability of models to predict the performance of lines using the da
  ## Parameters
   inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
   inputETA='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/ETA.RData'
-  outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/full_data_models/'
-
+  outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/cross_validation/'
+  CV <- 1
   library(BGLR)
   nIter=1200; burnIn=200
  ###
@@ -20,9 +20,31 @@ To assess the ability of models to predict the performance of lines using the da
  setwd(outputFolder)
  load(inputFile)
  
- OUT=matrix(nrow=4,ncol=5,NA)
- colnames(OUT)=c('E','G','W','GxW','Error')
- rownames(OUT)=c('EL','EG','EGW','EGW_GxW')
+ nfolds <- 5
+ IDs <- rownames(X)
+ IDy <- as.character(Y$VAR)
+ folds <- rep(1:nfolds,each=ceiling(length(IDs)/nfolds))[order(runif(length(IDs)))]
+ CVfolds <- rep(NA,nrow(Y))
+
+ if(CV==1)
+ {
+   for(i in 1:nfolds)
+   {
+       tmp <- IDy%in%IDs[fold==i]
+       CVfolds[tmp] <- i
+   }
+ }
+
+ if(CV==2)
+ {
+   for(i in IDs)
+   {
+       tmp <- which(IDy==i)
+       ni <- length(tmp)
+       fold0 <- sample(1:nfolds,size=ni,replace=length(tmp)>nfolds)
+       CVfolds[tmp] <- fold0
+   }
+ }
  
  ### Model 1: Additive model (without markers)
   load(inputETA)
