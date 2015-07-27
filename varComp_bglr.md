@@ -54,7 +54,6 @@
     plot(density(scan('ETA_YEAR_varB.dat')),col=4) ; abline(v=fmBGLR$ETA$YEAR$varB,lty=2,col=2 )
 
     # Predictions are almost equivalent
-    
     plot(predict(fmLMER),fmBGLR$yHat,cex=.5,col=4)
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
