@@ -13,22 +13,8 @@
  load(envCovFile)
  
  pdf('eigenAnalysis.pdf')
- 
- ### Gentoypes ###################################
- 
-  # MAF and missing values frequency
-   freqNA <- apply(X,2,function(x) sum(!x%in%c(0,1,2))/length(x)) 
-   MAF <- apply(X,2,function(x) mean(x[x%in%c(0,1,2)])/2)
-   MAF <- ifelse(MAF>0.5,1-MAF,MAF)
+ ### Genotypes ###################################
 
-  # Remove markers with MAF < 0.05 and freqNA > 0.5
-   index <- which(MAF<0.05 | freqNA>0.5)
-   if(length(index)>0) X <- X[,-index]
- 
-  # Genomic relationship matrix
-   Z <- scale(X,center=TRUE,scale=TRUE)
-   G <- tcrossprod(Z)/ncol(Z)
- 
   # Principal component analysis
    EVD<- eigen(G)
    
@@ -43,7 +29,6 @@
    plot(EVD$vectors[,1:2],main="Genotypes: PC 1 vs PC 2", xlab="PC 1",ylab="PC 2",col=4,cex=.5)
    
   ## Environmental covariates ################
-   W=scale(W)
    SVD=svd(W,nu=nrow(W),nv=ncol(W)-1)
    varExp <- 100*SVD$d/sum(SVD$d)
 
@@ -55,14 +40,14 @@
   # Eigenvectors
    plot(SVD$u[,1:2],main="Env. Covariates: PC 1 vs PC 2 (by location)", xlab="PC 1",ylab="PC 2",col="white",cex=.5)
    labels=unique(Y$LOC)
-   for(i in 1:length(locs)){
+   for(i in 1:length(labels)){
       tmp=Y$LOC==labels[i]
       points(x=SVD$u[tmp,1],y=SVD$u[tmp,2],col=i,cex=.5)
    }
 
   plot(SVD$u[,1:2],main="Env. Covariates: PC 1 vs PC 2 (by region)", xlab="PC 1",ylab="PC 2",col="white",cex=.5)
    labels=unique(Y$REGION)
-   for(i in 1:length(locs)){
+   for(i in 1:length(labels)){
       tmp=Y$REGION==labels[i]
       points(x=SVD$u[tmp,1],y=SVD$u[tmp,2],col=i,cex=.5)
    }
