@@ -2,10 +2,10 @@ This code is for preparing data: matching genotypic and genotypic information, a
 
 ```R
 ## Parameters
-  genoFile='/Users/epidemiology/Documents/Biostatistics/ARVALIS/PIPELINE_2014/data/X_2012_2014.rda'
-  envCovFile='/Users/epidemiology/Documents/Biostatistics/ARVALIS/PIPELINE_2014/data/W_No_ctr_std.rda' 
-  phenoFile='/Users/epidemiology/Documents/Biostatistics/ARVALIS/PIPELINE_2014/data/Y.rda' 
-  outputFolder='/Users/epidemiology/Documents/Biostatistics/ARVALIS/PIPELINE_2014/input/'
+  genoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/X_2012_2014.rda'
+  envCovFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/W_No_ctr_std.rda' 
+  phenoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/Y.rda' 
+  outputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   
   thresholdMAF <- 0.05
   thresholdNAfreq <- 0.3
