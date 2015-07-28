@@ -8,8 +8,7 @@ To assess the ability of models to predict the performance of lines using the da
  
 ```R
  ## Parameters
-  inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
-  inputETA='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/ETA.RData'
+  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/cross_validation/'
   
   #############
@@ -20,19 +19,18 @@ To assess the ability of models to predict the performance of lines using the da
   CV <- 2
   model <- 3   
   seed <- 1
+  nfolds <- 5
   nIter <- 20000; burnIn <- 5000
  ###
  library(BGLR)
 
  dir.create(outputFolder) 
  setwd(outputFolder)
- load(inputFile)
+ load(paste0(inputFolder,"/standardized_data.RData"))
  
- nfolds <- 5
  seeds <- sample(seq(1E4,1E5),100,replace=FALSE)
  models <- c("EL","EG","EGW","EGW_GxW")
  model <- models[model]
- y <- Y$rdt
  IDs <- rownames(X)
  IDy <- as.character(Y$VAR)
  folds <- rep(1:nfolds,each=ceiling(length(IDs)/nfolds))[order(runif(length(IDs)))]
@@ -52,24 +50,18 @@ To assess the ability of models to predict the performance of lines using the da
    for(i in IDs)
    {   tmp <- which(IDy==i)
        ni <- length(tmp)
-       fold0 <-rep(1:nfolds,each=ceiling(ni/nfolds))[1:ni][order(runif(ni))]
+       fold0 <- rep(1:nfolds,each=ceiling(ni/nfolds))[1:ni][order(runif(ni))]
        CVfolds[tmp] <- fold0
    }
  }
 
  ## Fitting model
- load(inputETA)
- ETA <- switch(model,
-	'EL'      = ETA$ETA1, 
-	'EG'      = ETA$ETA2,
-	'EGW'     = ETA$ETA3,
-	'EGW_GxW' = ETA$ETA4 		
- )
- yHatCV <- rep(NA,length(y))
+ load(paste0(inputFolder,"/ETA_",model,".RData"))
+ yHatCV <- rep(NA,nrow(Y))
  
  for(fold in 1:nfolds)
  {
-   yNA <- y
+   yNA <- Y$y
    indexNA <- CVfolds==fold 
    yNA[indexNA] <- NA
    
@@ -77,7 +69,7 @@ To assess the ability of models to predict the performance of lines using the da
    yHatCV[indexNA] <- fm$yHat[indexNA]
  }
 
- OUT <- data.frame(y,yHatCV,ENV=Y$ENV)
+ OUT <- data.frame(y=Y$y,yHatCV,ENV=Y$ENV)
 
  tt <- lapply(split(OUT,OUT$ENV),function(x)c(nrow(x),cor(x$y,x$yHatCV)))
  OUT2 <- do.call('rbind',tt)
