@@ -18,10 +18,9 @@ To assess the ability of models to predict the performance of lines using the da
   #   seed  = 1 to 100
   #############
   CV <- 2
-  model <- 3       
-  nIter <- 20000
-  burnIn <- 5000
+  model <- 3   
   seed <- 1
+  nIter <- 20000; burnIn <- 5000
  ###
  library(BGLR)
 
