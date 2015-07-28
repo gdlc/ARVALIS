@@ -18,7 +18,7 @@
   Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
   
   
-  fmLMER=lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
+  fmLMER=lmer(y~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
                (1|YEARxREGION)+(1|YEARxLOC),data=Y)  
  
  
@@ -29,10 +29,10 @@
           LOC=list(~factor(Y$LOC)-1,model='BRR'),
           YEARxREG=list(~factor(Y$YEARxREGION)-1,model='BRR'),
           YEARxLOC=list(~factor(Y$YEARxLOC)-1,model='BRR')
-      )
+         )
       
       
-  fmBGLR=BGLR(y=Y$rdt,ETA=LP,nIter=32000,burnIn=2000,thin=10)  
+  fmBGLR=BGLR(y=Y$y,ETA=LP,nIter=32000,burnIn=2000,thin=10)  
  
   summary(fmLMER)
   
