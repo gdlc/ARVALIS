@@ -24,8 +24,9 @@ This code is for preparing data: matching genotypic and genotypic information, a
    Y=Y[index,]
    W=W_No_ctr_std[index,]
    X=X[IDs,];   stopifnot(all(Y$VAR%in%rownames(X))); stopifnot(all(rownames(X)%in%Y$VAR)) 
+   Y$y <- Y$rdt
 
- ### Applying quality control to Gentoypes ###################################
+ ### Applying quality control to Genotypes ###################################
    freqNA <- apply(X,2,function(x) sum(!x%in%valid_markers)/length(x)) 
    MAF <- apply(X,2,function(x) mean(x[x%in%valid_markers])/2)
    MAF <- ifelse(MAF>0.5,1-MAF,MAF)
