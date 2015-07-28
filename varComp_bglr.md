@@ -5,11 +5,11 @@
    
 ```R
 ## Parameters
-  inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
+  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/varComp_bglr/'
  ###
 
- load(inputFile)
+ load(paste0(inputFolder,"/standardized_data.RData"))
  library(lme4)
  library(BGLR)
 
