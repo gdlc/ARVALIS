@@ -41,7 +41,6 @@ This code is for preparing data: matching genotypic and genotypic information, a
  ## Saving data
   save(X,Y,W,G,file="standardized_data.RData")
 
-
  ### Creating inputs for models
   # Model 1: Additive model (EL, without markers)
   ETA <- list(ENV=list(~factor(Y$ENV)-1,model='BRR'),
@@ -63,7 +62,6 @@ This code is for preparing data: matching genotypic and genotypic information, a
   ETA$COV=list(X=W, model='BRR')
   save(ETA,file='ETA_EGW.RData')
   
-  
   # Model 4: GxW Model 1 (EGW+GxW, Model 3 + interactions between markers and env. covariates)
   Omega <- tcrossprod(W)
   Omega <- Omega/mean(diag(Omega))
@@ -72,9 +70,7 @@ This code is for preparing data: matching genotypic and genotypic information, a
   PC <- EVD$vectors[,EVD$values>1e-5]
   for(i in 1:ncol(PC)) PC[,i] <- PC[,i]*sqrt(EVD$values[i])
   ETA$GxW=list(X=PC, model='BRR')
-  save(ETA,file='ETA_EGW_GW.RData')
-  
-
+  save(ETA,file='ETA_EGW_GxW.RData')
   
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
