@@ -2,8 +2,7 @@
 
 ```R
  ## Parameters
-  inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
-  inputETA='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/ETA.RData'
+  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/full_data_models/'
 
   nIter=1200; burnIn=200
@@ -12,7 +11,7 @@
  
  dir.create(outputFolder) 
  setwd(outputFolder)
- load(inputFile)
+ load(paste0(inputFolder,"/standardized_data.RData"))
  
  OUT=matrix(nrow=4,ncol=5,NA)
  colnames(OUT)=c('E','G','W','GxW','Error')
