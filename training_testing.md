@@ -12,26 +12,38 @@ To assess the ability of models to predict the performance of lines using the da
   inputETA='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/ETA.RData'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/cross_validation/'
   
-  CV <- 1
-  nIter=1200; burnIn=200
+  #############
+  #   CV    = 1:CV1,   2:CV2
+  #   model = 1:EL,   2:EG,   3:EGW,   4:EGW_GxW
+  #   seed  = 1 to 100
+  #############
+  CV <- 2
+  model <- 3       
+  nIter <- 20000
+  burnIn <- 5000
+  seed <- 1
  ###
  library(BGLR)
- 
+
  dir.create(outputFolder) 
  setwd(outputFolder)
  load(inputFile)
  
  nfolds <- 5
+ seeds <- sample(seq(1E4,1E5),100,replace=FALSE)
+ models <- c("EL","EG","EGW","EGW_GxW")
+ model <- models[model]
+ y <- Y$rdt
  IDs <- rownames(X)
  IDy <- as.character(Y$VAR)
  folds <- rep(1:nfolds,each=ceiling(length(IDs)/nfolds))[order(runif(length(IDs)))]
  CVfolds <- rep(NA,nrow(Y))
 
+ set.seed(seeds[seed])
  if(CV==1)
  {
    for(i in 1:nfolds)
-   {
-       tmp <- IDy%in%IDs[fold==i]
+   {   tmp <- IDy%in%IDs[folds==i]
        CVfolds[tmp] <- i
    }
  }
@@ -39,48 +51,41 @@ To assess the ability of models to predict the performance of lines using the da
  if(CV==2)
  {
    for(i in IDs)
-   {
-       tmp <- which(IDy==i)
+   {   tmp <- which(IDy==i)
        ni <- length(tmp)
-       fold0 <- sample(1:nfolds,size=ni,replace=length(tmp)>nfolds)
+       fold0 <- sample(1:nfolds,size=ni,replace=ni>nfolds)
        CVfolds[tmp] <- fold0
    }
  }
- 
- ### Model 1: Additive model (without markers)
-  load(inputETA)
-  ETA <- ETA$ETA1
-  fmEL <- BGLR(y=Y$rdt,ETA=ETA,saveAt='EL_',nIter=nIter,burnIn=burnIn)
-  OUT['EL','E']=fmEL$ETA$ENV$varB
-  OUT['EL','G']=fmEL$ETA$VAR$varB
-  OUT['EL','Error']=fmEL$varE
- 
- ### Model 2: Additive model (with markers)
-  load(inputETA)
-  ETA <- ETA$ETA2
-  fmEG <- BGLR(y=Y$rdt,ETA=ETA,saveAt='EG_',nIter=nIter,burnIn=burnIn)
-  OUT['EG','E']=fmEG$ETA$ENV$varB
-  OUT['EG','G']=fmEG$ETA$VAR$varB
-  OUT['EG','Error']=fmEG$varE
 
- ### Model 3: Additive model (with markers and env. cov.)
-  load(inputETA)
-  ETA <- ETA$ETA3
-  fmEGW <- BGLR(y=Y$rdt,ETA=ETA,saveAt='EGW_',nIter=nIter,burnIn=burnIn)
-  OUT['EGW','E']=fmEGW$ETA$ENV$varB
-  OUT['EGW','G']=fmEGW$ETA$VAR$varB
-  OUT['EGW','W']=fmEGW$ETA$COV$varB
-  OUT['EGW','Error']=fmEGW$varE
-  
- ### Model 4: GxW Model 1 (Model 3 + interactions between markers and env. covariates)
-  load(inputETA)
-  ETA <- ETA$ETA4
-  fmEGW_GxW <- BGLR(y=Y$rdt,ETA=ETA,saveAt='EGW_GxW_',nIter=nIter,burnIn=burnIn)
-  OUT['EGW_GxW','E']=fmEGW_GxW$ETA$ENV$varB
-  OUT['EGW_GxW','G']=fmEGW_GxW$ETA$VAR$varB
-  OUT['EGW_GxW','W']=fmEGW_GxW$ETA$COV$varB
-  OUT['EGW_GxW','GxW']=fmEGW_GxW$ETA$GxW$varB
-  OUT['EGW_GxW','Error']=fmEGW_GxW$varE
-  
-  round(OUT,3)
+ ## Fitting model
+ load(inputETA)
+ ETA <- switch(model,
+	'EL'      = ETA$ETA1, 
+	'EG'      = ETA$ETA2,
+	'EGW'     = ETA$ETA3,
+	'EGW_GxW' = ETA$ETA4 		
+ )
+ yHatCV <- rep(NA,length(y))
+ 
+ for(fold in 1:nfolds)
+ {
+   yNA <- y
+   indexNA <- CVfolds==fold 
+   yNA[indexNA] <- NA
+   
+   fm <- BGLR(y=yNA,ETA=ETA,nIter=nIter,burnIn=burnIn)
+   yHatCV[indexNA] <- fm$yHat[indexNA]
+ }
+
+ OUT <- data.frame(y,yHatCV,ENV=Y$ENV)
+
+ tt <- lapply(split(OUT,OUT$ENV),function(x)c(nrow(x),cor(x$y,x$yHatCV)))
+ OUT2 <- do.call('rbind',tt)
+ colnames(OUT2) <- c("n","corCV")
+ OUT2 <- data.frame(ENV=rownames(OUT2),OUT2)
+
+ ### Saving outputs 
+ write.csv(OUT,paste0("Predictions_",model,"_CV",CV,".csv"),row.names=F)
+ write.csv(OUT2,paste0("Predictions_by_Env_",model,"_CV",CV,".csv"),row.names=F)
 ```
