@@ -58,7 +58,7 @@ This code is for preparing data: matching genotypic and genotypic information, a
   save(ETA,file='ETA_EG.RData')
   
   # Model 3: Additive model (EGW, with markers and env. cov.)
-  W=scale(W)/sqrt(ncol(W))
+  W <- scale(W)/sqrt(ncol(W))
   ETA$COV=list(X=W, model='BRR')
   save(ETA,file='ETA_EGW.RData')
   
