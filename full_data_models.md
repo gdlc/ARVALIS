@@ -2,7 +2,7 @@
 
 ```R
  ## Parameters
-  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
+  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/full_data_models/'
 
   nIter=1200; burnIn=200
@@ -18,24 +18,21 @@
  rownames(OUT)=c('EL','EG','EGW','EGW_GxW')
  
  ### Model 1: Additive model (without markers)
-  load(inputETA)
-  ETA <- ETA$ETA1
+  load(paste0(inputFolder,"/ETA_EL.RData"))
   fmEL <- BGLR(y=Y$y,ETA=ETA,saveAt='EL_',nIter=nIter,burnIn=burnIn)
   OUT['EL','E']=fmEL$ETA$ENV$varB
   OUT['EL','G']=fmEL$ETA$VAR$varB
   OUT['EL','Error']=fmEL$varE
  
  ### Model 2: Additive model (with markers)
-  load(inputETA)
-  ETA <- ETA$ETA2
+  load(paste0(inputFolder,"/ETA_EG.RData"))
   fmEG <- BGLR(y=Y$y,ETA=ETA,saveAt='EG_',nIter=nIter,burnIn=burnIn)
   OUT['EG','E']=fmEG$ETA$ENV$varB
   OUT['EG','G']=fmEG$ETA$VAR$varB
   OUT['EG','Error']=fmEG$varE
 
  ### Model 3: Additive model (with markers and env. cov.)
-  load(inputETA)
-  ETA <- ETA$ETA3
+  load(paste0(inputFolder,"/ETA_EGW.RData"))
   fmEGW <- BGLR(y=Y$y,ETA=ETA,saveAt='EGW_',nIter=nIter,burnIn=burnIn)
   OUT['EGW','E']=fmEGW$ETA$ENV$varB
   OUT['EGW','G']=fmEGW$ETA$VAR$varB
@@ -43,8 +40,7 @@
   OUT['EGW','Error']=fmEGW$varE
   
  ### Model 4: GxW Model 1 (Model 3 + interactions between markers and env. covariates)
-  load(inputETA)
-  ETA <- ETA$ETA4
+  load(paste0(inputFolder,"/ETA_EGW_GxW.RData"))
   fmEGW_GxW <- BGLR(y=Y$y,ETA=ETA,saveAt='EGW_GxW_',nIter=nIter,burnIn=burnIn)
   OUT['EGW_GxW','E']=fmEGW_GxW$ETA$ENV$varB
   OUT['EGW_GxW','G']=fmEGW_GxW$ETA$VAR$varB
