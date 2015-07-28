@@ -56,7 +56,7 @@
   round(OUT,3)
 ```
  
-Estimated Variance Components
+Estimated Variance Components (Old Data)
 
 
 | Model     | E    |  G     | W    | GxW   | Error |
@@ -66,5 +66,16 @@ EG      |  200.821 |  16.937  |     --  |    --  | 22.659 |
 EGW      | 143.603 |  16.108 |  38.099 |     --  | 22.590 | 
 EGW_GxW  | 144.390  | 14.044 |  34.216 |  5.990 |  18.311 | 
 
+
+ 
+Estimated Variance Components (Data 2015)
+
+
+| Model     | E    |  G     | W    | GxW   | Error |
+| --------- |-----:| -----:| -----:| -----:| -----:| 
+EL      | 201.068  | 14.644  |     --  |    --  | 22.638 | 
+EG      |  200.821 |  16.937  |     --  |    --  | 22.659 | 
+EGW      | 143.603 |  16.108 |  38.099 |     --  | 22.590 | 
+EGW_GxW  | 144.390  | 14.044 |  34.216 |  5.990 |  18.311 | 
 
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
