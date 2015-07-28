@@ -3,13 +3,13 @@
 
 ```R
 ## Parameters
-  inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
+  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/eigen/'
  ###
  
  dir.create(outputFolder) 
  setwd(outputFolder)
- load(inputFile)
+ load(paste0(inputFolder,"/standardized_data.RData"))
  
  pdf('eigenAnalysis.pdf')
  ### Genotypes ###################################
