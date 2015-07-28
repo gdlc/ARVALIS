@@ -28,7 +28,7 @@
    plot(EVD$vectors[,1:2],main="Genotypes: PC 1 vs PC 2", xlab="PC 1",ylab="PC 2",col=4,cex=.5)
    
   ## Environmental covariates ################
-   SVD=svd(W,nu=nrow(W),nv=ncol(W)-1)
+   SVD <- svd(W,nu=nrow(W),nv=ncol(W)-1)
    varExp <- 100*SVD$d/sum(SVD$d)
 
   # Eigenvalues
@@ -38,14 +38,14 @@
 
   # Eigenvectors
    plot(SVD$u[,1:2],main="Env. Covariates: PC 1 vs PC 2 (by location)", xlab="PC 1",ylab="PC 2",col="white",cex=.5)
-   labels=unique(Y$LOC)
+   labels <- unique(Y$LOC)
    for(i in 1:length(labels)){
       tmp=Y$LOC==labels[i]
       points(x=SVD$u[tmp,1],y=SVD$u[tmp,2],col=i,cex=.5)
    }
 
   plot(SVD$u[,1:2],main="Env. Covariates: PC 1 vs PC 2 (by region)", xlab="PC 1",ylab="PC 2",col="white",cex=.5)
-   labels=unique(Y$REGION)
+   labels <- unique(Y$REGION)
    for(i in 1:length(labels)){
       tmp=Y$REGION==labels[i]
       points(x=SVD$u[tmp,1],y=SVD$u[tmp,2],col=i,cex=.5)
