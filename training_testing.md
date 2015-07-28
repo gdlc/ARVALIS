@@ -52,7 +52,7 @@ To assess the ability of models to predict the performance of lines using the da
    for(i in IDs)
    {   tmp <- which(IDy==i)
        ni <- length(tmp)
-       fold0 <- sample(1:nfolds,size=ni,replace=ni>nfolds)
+       fold0 <-rep(1:nfolds,each=ceiling(ni/nfolds))[1:ni][order(runif(ni))]
        CVfolds[tmp] <- fold0
    }
  }
