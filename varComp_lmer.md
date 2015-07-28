@@ -19,11 +19,11 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
  Y$YEARxLOC=paste(Y$YEAR,"x",Y$LOC)
  Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
 
-  fm1 <- lmer(rdt~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  
+  fm1 <- lmer(y~factor(YEAR)+(1|VAR)+(1|LOC),data=Y)  
 
-  fm2 <- lmer(rdt~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
+  fm2 <- lmer(y~factor(YEAR)+(1|VAR)+(1|REGION/LOC),data=Y)  ## Partitioning varinace of LOC into Region and LOC within region.
 
-  fm3 <- lmer(rdt~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
+  fm3 <- lmer(y~(1|VAR)+(1|YEAR)+(1|REGION)+(1|LOC)+
                (1|YEARxREGION)+(1|YEARxLOC),data=Y)  
   summary(fm1)
   summary(fm2)
