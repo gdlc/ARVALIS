@@ -15,7 +15,7 @@
  ### Genotypes ###################################
 
   # Principal component analysis
-   EVD<- eigen(G)
+   EVD <- eigen(G)
    
   # Eigenvalues
    varExp <- 100*EVD$values/sum(EVD$values)
