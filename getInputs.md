@@ -38,15 +38,16 @@ This code is for preparing data: matching genotypic and genotypic information, a
    Z <- scale(X,center=TRUE,scale=TRUE)
    G <- tcrossprod(Z)/ncol(Z)
 
+ ## Saving data
+  save(X,Y,W,G,file="standardized_data.RData")
+
 
  ### Creating inputs for models
-  ETA <- list()
-  
   # Model 1: Additive model (EL, without markers)
-  ETA1 <- list(ENV=list(~factor(Y$ENV)-1,model='BRR'),
+  ETA <- list(ENV=list(~factor(Y$ENV)-1,model='BRR'),
            VAR=list(~factor(Y$VAR)-1,model='BRR')
           )
-  ETA$ETA1 <- ETA1
+  save(ETA,file='ETA_EL.RData')
   
   # Model 2: Additive model (EG, with markers)
   myIndex <- match(Y$VAR,rownames(G))
@@ -54,14 +55,15 @@ This code is for preparing data: matching genotypic and genotypic information, a
   PC <- EVD$vectors[,EVD$values>1e-5]
   for(i in 1:ncol(PC)) PC[,i] <- PC[,i]*sqrt(EVD$values[i])
   PC <- PC[myIndex,]
-  ETA1$VAR <- list(X=PC,model='BRR')
-  ETA$ETA2 <- ETA1
-
+  ETA$VAR <- list(X=PC,model='BRR')
+  save(ETA,file='ETA_EG.RData')
+  
   # Model 3: Additive model (EGW, with markers and env. cov.)
   W=scale(W)/sqrt(ncol(W))
-  ETA1$COV=list(X=W, model='BRR')
-  ETA$ETA3 <- ETA1
-
+  ETA$COV=list(X=W, model='BRR')
+  save(ETA,file='ETA_EGW.RData')
+  
+  
   # Model 4: GxW Model 1 (EGW+GxW, Model 3 + interactions between markers and env. covariates)
   Omega <- tcrossprod(W)
   Omega <- Omega/mean(diag(Omega))
@@ -69,12 +71,10 @@ This code is for preparing data: matching genotypic and genotypic information, a
   EVD <- eigen(GxW)
   PC <- EVD$vectors[,EVD$values>1e-5]
   for(i in 1:ncol(PC)) PC[,i] <- PC[,i]*sqrt(EVD$values[i])
-  ETA1$GxW=list(X=PC, model='BRR')
-  ETA$ETA4 <- ETA1
+  ETA$GxW=list(X=PC, model='BRR')
+  save(ETA,file='ETA_EGW_GW.RData')
   
- ### Saving inputs
- save(X,Y,W,G,file="standardized_data.RData")
- save(ETA,file="ETA.RData")
+
   
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
