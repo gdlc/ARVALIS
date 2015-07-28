@@ -10,11 +10,11 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
    
 ```R
  ## Parameters. 'inputFolder' was previously saved with X,Y,W and G matrices
-  inputFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/standardized_data.RData'
+  inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/varComp_lmer/'
  ###
  dir.create(outputFolder)
- load(inputFile)
+ load(paste0(inputFolder,"/standardized_data.RData"))
  library(lme4)
  Y$YEARxLOC=paste(Y$YEAR,"x",Y$LOC)
  Y$YEARxREGION=paste(Y$YEAR,"x",Y$REGION)
