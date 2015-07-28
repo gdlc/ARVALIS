@@ -56,7 +56,7 @@
   round(OUT,3)
 ```
  
-Estimated Variace Components
+Estimated Variance Components
 
 
 | Model     | E    |  G     | W    | GxW   | Error |
