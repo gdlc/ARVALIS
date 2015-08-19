@@ -1,6 +1,10 @@
 ### Structure of Genotypes and of Env. Covariates Based on Eigen-decomposition
 
-#HOLA
+```SAS
+ proc reg;
+ model y=x1+x2;
+ run;
+```
 
 ```R
 ## Parameters
