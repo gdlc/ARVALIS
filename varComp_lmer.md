@@ -30,5 +30,7 @@ In this module we use the lme4 package to fit a mixed effects model for yield. W
   summary(fm3)
   save(fm3,file=paste0(outputFolder,'fm.RData'))
   
+  colMeans(X)
+  
 ```
 [Home](https://github.com/gdlc/ARVALIS/blob/master/README.md)
