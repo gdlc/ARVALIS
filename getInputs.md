@@ -40,7 +40,7 @@ This code is for preparing data: matching genotypic and genotypic information, a
    IDs=intersect(Y$VAR,rownames(X))
    index <- Y$VAR%in%IDs
    Y=Y[index,]
-   W=W_No_ctr_std[index,]
+   W=W[index,]
    X=X[IDs,];   stopifnot(all(Y$VAR%in%rownames(X))); stopifnot(all(rownames(X)%in%Y$VAR)) 
    Y$y <- Y$rdt
 
