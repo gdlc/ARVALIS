@@ -1,3 +1,21 @@
+Before get started, these instructions are used to save the data files that are iniatially in .csv format. 
+
+```R
+  setwd("/mnt/research/quantgen/ARVALIS2/PIPELINE2015")
+  X <- as.matrix(read.csv2("data/X.csv",header=T,row.names=1))
+  Y <- read.csv2("data/Y.csv",header=T)
+  W <- as.matrix(read.csv2("data/W.csv",header=F,skip=1))
+  colnames(W) <- scan("W.csv",encoding="latin1",nlines=1,sep=";",what="character")
+
+  mode(W) <- "numeric"
+  mode(X) <- "numeric"
+  X <- t(X)
+
+  save(X,file="X.RData")
+  save(W,file="W.RData")
+  save(Y,file="Y.RData")
+```
+
 This code is for preparing data: matching genotypic and genotypic information, applying a quality control to genotypes.
 
 ```R
