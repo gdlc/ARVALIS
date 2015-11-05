@@ -20,10 +20,10 @@ This code is for preparing data: matching genotypic and genotypic information, a
 
 ```R
 ## Parameters
-  genoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/X_2012_2014.rda'
-  envCovFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/W_No_ctr_std.rda' 
-  phenoFile='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/getData/output/Y.rda' 
-  outputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
+  genoFile='/mnt/research/quantgen/ARVALIS2/PIPELINE2015/data/X.RData'
+  envCovFile='/mnt/research/quantgen/ARVALIS2/PIPELINE2015/data/W.RData' 
+  phenoFile='/mnt/research/quantgen/ARVALIS2/PIPELINE2015/data/Y.RData' 
+  outputFolder='/mnt/research/quantgen/ARVALIS2/PIPELINE2015/input/'
   
   thresholdMAF <- 0.05
   thresholdNAfreq <- 0.3
