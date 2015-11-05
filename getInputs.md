@@ -53,6 +53,14 @@ This code is for preparing data: matching genotypic and genotypic information, a
    index <- which(MAF<thresholdMAF | freqNA>thresholdNAfreq)
    if(length(index)>0) X <- X[,-index]
 
+  # Impute markers
+  for(i in 1:ncol(X))
+  {
+  	if(i%%1000==0) cat("Imputed marker ", i,"\n")
+  	tmp <- as.numeric(X[,i])
+  	X[,i] <- ifelse(is.na(tmp),mean(tmp,na.rm=T),tmp)
+  }
+
   # Genomic relationship matrix
    Z <- scale(X,center=TRUE,scale=TRUE)
    G <- tcrossprod(Z)/ncol(Z)
