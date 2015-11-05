@@ -5,7 +5,7 @@ Before get started, these instructions are used to save the data files that are 
   X <- as.matrix(read.csv2("data/X.csv",header=T,row.names=1))
   Y <- read.csv2("data/Y.csv",header=T)
   W <- as.matrix(read.csv2("data/W.csv",header=F,skip=1))
-  colnames(W) <- scan("W.csv",encoding="latin1",nlines=1,sep=";",what="character")
+  colnames(W) <- scan("data/W.csv",encoding="latin1",nlines=1,sep=";",what="character")
 
   mode(W) <- "numeric"
   mode(X) <- "numeric"
