@@ -9,7 +9,7 @@
  minNEnv=20 # used to remove environments with few records.
  minNVAR=20 # used to remove genotypes with few records.
  nRecords=100 # used to determine which lines to include in the second plot.
- nPC=5 # number of env. covariates PC to be included.
+ nPC=0 # number of env. covariates PC to be included.
  covName='Tmoyb0SEp1'
  colNum=which(colnames(W)==covName)
  LRT<-TRUE # perform Likelihood Ratio Test?
@@ -34,7 +34,7 @@ y<-Y$rdt
 LOCxYEAR=paste(Y$LOC,Y$YEAR,sep='-')
 VAR=Y$VAR
 ec<-W[,colNum]
-PC.W<-svd(scale(W[,-colNum]),nv=0,nu=nPC)$u
+if(nPC>0){PC.W<-svd(scale(W[,-colNum]),nv=0,nu=nPC)$u}
 
 EC.ns=as.matrix(ns(ec,df=4,intercept=F))
 EC.ns<-scale(EC.ns,scale=TRUE,center=TRUE)
@@ -43,10 +43,10 @@ x2=EC.ns[,2]
 x3=EC.ns[,3]
 x4=EC.ns[,4]
 
-fm0  <-lmer(y~PC.W+(1|VAR)+(1|LOCxYEAR),REML=F)
-fm0    <-lmer(y~PC.W+(1|VAR)+(1|LOCxYEAR)+ec,REML=F)
-fmFNS  <-lmer(y~PC.W+(1|VAR)+(1|LOCxYEAR)+EC.ns,REML=F)
-fmRNS  <-lmer(y~PC.W+(1|LOCxYEAR)+x1+x2+x3+x4+(1|VAR)+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
+fm0  <-lmer(y~(1|VAR)+(1|LOCxYEAR)+PC.W,REML=F)
+fm0    <-lmer(y~(1|VAR)+(1|LOCxYEAR)+PC.W+ec,REML=F)
+fmFNS  <-lmer(y~(1|VAR)+(1|LOCxYEAR)+EC.ns+PC.W,REML=F)
+fmRNS  <-lmer(y~(1|LOCxYEAR)+x1+x2+x3+x4+(1|VAR)+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR)+PC.W,REML=F )
 
 ## Likelihood ratio test
 if(LRT){
@@ -65,7 +65,7 @@ if(LRT){
   print(AOV)
  }
 
-BHat<-as.matrix(coef(fmRNS)$VAR)[,-c(2:(nPC+1))]
+BHat<-as.matrix(coef(fmRNS)$VAR)[,2:5]
 YHat<-matrix(nrow=length(ec),ncol=nrow(BHat),0)
 for(i in 1:ncol(YHat)){
     YHat[,i]<-cbind(1,EC.ns)%*%BHat[i,]
