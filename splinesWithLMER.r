@@ -6,10 +6,8 @@
 ## Change parameters here
  load('~/Dropbox/ARVALIS/data/Data2015/Y.RData')
  load('~/Dropbox/ARVALIS/data/Data2015/W.RData')
- minNEnv=20 # used to remove environments with few records.
- minNVAR=20 # used to remove genotypes with few records.
  nRecordsPrint=100 # used to determine which lines to include in the second plot.
- nPC=0 # number of env. covariates PC to be included.
+ nPC=10 # number of env. covariates PC to be included.
  covName='Tmoyb0SEp1'
  colNum=which(colnames(W)==covName)
  LRT<-TRUE # perform Likelihood Ratio Test?
@@ -17,17 +15,6 @@
 
 library(lme4)
 library(splines)
-
-for(i in 1:5){
-  counts<-table(Y$VAR)
-  tmp<-Y$VAR%in%names(counts)[which(counts>=minNVAR)]
-  Y<-Y[tmp,]
-  W<-W[tmp,]
-  counts<-table(Y$ENV)
-  tmp<-Y$ENV%in%names(counts)[which(counts>=minNEnv)] 
-  Y<-Y[tmp,]
-  W<-W[tmp,]
-}
 
 
 y<-Y$rdt
