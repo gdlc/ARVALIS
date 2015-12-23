@@ -70,7 +70,7 @@ yHat0<-cbind(1,EC.ns)%*%colMeans(BHat)
     lines(x=sort(ec),y=YHat[order(ec),i],lwd=.3,col=2)
  }
  
- lines(x=sort(ec),y=yHat0[order(ec),lwd=2,col=4)
+ lines(x=sort(ec),y=yHat0[order(ec)],lwd=2,col=4)
  counts<-table(Y$VAR)
  
  IDs<-names(counts)[which(counts>nRecords)]
