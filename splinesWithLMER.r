@@ -18,6 +18,18 @@
 library(lme4)
 library(splines)
 
+for(i in 1:5){
+  counts<-table(Y$VAR)
+  tmp<-Y$VAR%in%names(counts)[which(counts>=minNVAR)]
+  Y<-Y[tmp,]
+  W<-W[tmp,]
+  counts<-table(Y$ENV)
+  tmp<-Y$ENV%in%names(counts)[which(counts>=minNEnv)] 
+  Y<-Y[tmp,]
+  W<-W[tmp,]
+}
+
+
 y<-Y$rdt
 LOCxYEAR=paste(Y$LOC,Y$YEAR,sep='-')
 VAR=Y$VAR
