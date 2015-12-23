@@ -62,7 +62,7 @@ for(i in 1:ncol(YHat)){
 yHat0<-cbind(1,EC.ns)%*%colMeans(BHat)
 
  
-pdf(paste0(covName,'.pdf'))
+#pdf(paste0(covName,'.pdf'))
  plot(numeric()~numeric(),xlim=range(ec),ylim=range(YHat),xlab=covName,ylab='Predicted Yield',main='All')
  abline(v=ec,col=8,lty=1,lwd=.01)
  for(i in 1:ncol(YHat)){
@@ -83,6 +83,6 @@ pdf(paste0(covName,'.pdf'))
  }
  lines(x=sort(ec),y=yHat0[order(ec)],lwd=2,col=4)
 
-dev.off()
+#dev.off()
 
 
