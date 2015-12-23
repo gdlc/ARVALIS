@@ -79,9 +79,9 @@ yHat0<-cbind(1,EC.ns)%*%colMeans(BHat)
  lines(x=sort(ec),y=yHat0[order(ec)],lwd=2,col=4)
  counts<-table(Y$VAR)
  
- IDs<-names(counts)[which(counts>nRecords)]
+ IDs<-names(counts)[which(counts>nRecordsPrint)]
  plot(numeric()~numeric(),xlim=range(ec),ylim=range(YHat),xlab=covName,ylab='Predicted Yield',
-      main=paste0('Linews with more than ',nRecords,'.'))
+      main=paste0('Lines with more than ',nRecordsPrint,'.'))
  abline(v=ec,col=8,lty=1,lwd=.01)
  for(i in 1:length(IDs)){
     newLine<-which(rownames(BHat)==IDs[i])
