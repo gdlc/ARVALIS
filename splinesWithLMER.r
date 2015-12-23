@@ -72,7 +72,7 @@ if(LRT){
   print(AOV)
  }
 
-BHat<-as.matrix(coef(fmRNS)$VAR)[,2:5]
+BHat<-as.matrix(coef(fmRNS)$VAR)[,1:5]
 YHat<-matrix(nrow=length(ec),ncol=nrow(BHat),0)
 for(i in 1:ncol(YHat)){
     YHat[,i]<-cbind(1,EC.ns)%*%BHat[i,]
