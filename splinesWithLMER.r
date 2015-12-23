@@ -9,7 +9,7 @@
  minNEnv=20 # used to remove environments with few records.
  minNVAR=20 # used to remove genotypes with few records.
  nRecords=100 # used to determine which lines to include in the second plot.
- nPC=10 # number of env. covariates PC to be included.
+ nPC=5 # number of env. covariates PC to be included.
  covName='Tmoyb0SEp1'
  colNum=which(colnames(W)==covName)
  LRT<-TRUE # perform Likelihood Ratio Test?
