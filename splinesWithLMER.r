@@ -1,7 +1,7 @@
 ###
 # Code for fitting, testing and ploting randome effects splines with lmer
 ###
-rm(list=ls())
+#rm(list=ls())
 
 ## Change parameters here
  load('~/Dropbox/ARVALIS/data/Data2015/Y.RData')
