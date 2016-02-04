@@ -1,56 +1,60 @@
 ###
 # Code for fitting, testing and ploting randome effects splines with lmer
 ###
-#rm(list=ls())
+
+rm(list=ls())
+ library(lme4)
+ library(splines)
+
 
 ## Change parameters here
- load('~/Dropbox/ARVALIS/data/Data2015/Y.RData')
- load('~/Dropbox/ARVALIS/data/Data2015/W.RData')
+ phenotypeFile<-'~/Dropbox/ARVALIS/data/Data2015/Y.RData'
+ envCovFile<-'~/Dropbox/ARVALIS/data/Data2015/W.RData'
  nRecordsPrint=100 # used to determine which lines to include in the second plot.
  nPC=10 # number of env. covariates PC to be included.
- covName='Tmoyb0SEp1'
- colNum=which(colnames(W)==covName)
+ #covName='Tmoyb0SEp1' 
  LRT<-TRUE # perform Likelihood Ratio Test?
 ###
 
-library(lme4)
-library(splines)
 
+ y<-Y$rdt
+ LOCxYEAR=paste(Y$LOC,Y$YEAR,sep='-')
+ VAR=Y$VAR
 
-y<-Y$rdt
-LOCxYEAR=paste(Y$LOC,Y$YEAR,sep='-')
-VAR=Y$VAR
-ec<-W[,colNum]
-if(nPC>0){PC.W<-svd(scale(W[,-colNum]),nv=0,nu=nPC)$u}
+ pdf('plotsEnvCov.pdf')
 
-EC.ns=as.matrix(ns(ec,df=4,intercept=F))
-EC.ns<-scale(EC.ns,scale=TRUE,center=TRUE)
-x1=EC.ns[,1]
-x2=EC.ns[,2]
-x3=EC.ns[,3]
-x4=EC.ns[,4]
+ for(covName in colnames(W)){
+  colNum=which(colnames(W)==covName)
+  cat('Working cov #',colNum,'\n')
+  ec<-W[,colNum]
+  if(nPC>0){PC.W<-svd(scale(W[,-colNum]),nv=0,nu=nPC)$u}
 
-if(nPC>0){
-  fm0   <-lmer(y~(1|VAR)+(1|LOCxYEAR)+PC.W,REML=F)
-  fm0   <-lmer(y~(1|VAR)+(1|LOCxYEAR)+ec+PC.W,REML=F)
-  fmFNS <-lmer(y~(1|VAR)+(1|LOCxYEAR)+EC.ns+PC.W,REML=F)
-  fmRNS <-lmer(y~(1|LOCxYEAR)+x1+x2+x3+x4+PC.W+(1|VAR)+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
-}else{
-  fm0   <-lmer(y~(1|VAR)+(1|LOCxYEAR),REML=F)
-  fm0   <-lmer(y~(1|VAR)+(1|LOCxYEAR)+ec,REML=F)
-  fmFNS <-lmer(y~(1|VAR)+(1|LOCxYEAR)+EC.ns,REML=F)
-  fmRNS <-lmer(y~(1|LOCxYEAR)+x1+x2+x3+x4+(1|VAR)+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
-}
+  EC.ns=as.matrix(ns(ec,df=4,intercept=F))
+  EC.ns<-scale(EC.ns,scale=TRUE,center=TRUE)
+  x1=EC.ns[,1]
+  x2=EC.ns[,2]
+  x3=EC.ns[,3]
+  x4=EC.ns[,4]
 
-## Likelihood ratio test
-if(LRT){
-  AOV=matrix(nrow=3,ncol=5)
-  rownames(AOV)<-c('Fixed-linear','Random-linear','Random-NS')
-  colnames(AOV)<-c('DF','Deviance','FL','RL','RNS')
-  comparison=anova(fm0,fmFNS,fmRNS)
-  AOV[,1]=comparison$Df
-  AOV[,2]=comparison$deviance
-  AOV[1,4]= -(AOV[2,2]-AOV[1,2])
+  if(nPC>0){
+    fm0   <-lmer(y~(1|VAR)+(1|LOCxYEAR)+ec+PC.W,REML=F)
+    fmFNS <-lmer(y~(1|VAR)+(1|LOCxYEAR)+EC.ns+PC.W,REML=F)
+    fmRNS <-lmer(y~(1|LOCxYEAR)+x1+x2+x3+x4+PC.W+(1|VAR)+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
+  }else{
+    fm0   <-lmer(y~(1|VAR)+(1|LOCxYEAR)+ec,REML=F)
+    fmFNS <-lmer(y~(1|VAR)+(1|LOCxYEAR)+EC.ns,REML=F)
+    fmRNS <-lmer(y~(1|LOCxYEAR)+x1+x2+x3+x4+(1|VAR)+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
+  }
+
+  ## Likelihood ratio test
+  if(LRT){
+    AOV=matrix(nrow=3,ncol=5)
+    rownames(AOV)<-c('Fixed-linear','Random-linear','Random-NS')
+    colnames(AOV)<-c('DF','Deviance','FL','RL','RNS')
+    comparison=anova(fm0,fmFNS,fmRNS)
+    AOV[,1]=comparison$Df
+    AOV[,2]=comparison$deviance
+    AOV[1,4]= -(AOV[2,2]-AOV[1,2])
   AOV[1,5]= -(AOV[3,2]-AOV[1,2])
   AOV[2,5]= -(AOV[3,2]-AOV[2,2])
   AOV[2,3]=1-pchisq(AOV[1,2]-AOV[2,2],df=AOV[2,1]-AOV[1,1])
@@ -64,11 +68,10 @@ YHat<-matrix(nrow=length(ec),ncol=nrow(BHat),0)
 for(i in 1:ncol(YHat)){
     YHat[,i]<-cbind(1,EC.ns)%*%BHat[i,]
 }
-
 yHat0<-cbind(1,EC.ns)%*%colMeans(BHat)
 
  
-#pdf(paste0(covName,'.pdf'))
+
  plot(numeric()~numeric(),xlim=range(ec),ylim=range(YHat),xlab=covName,ylab='Predicted Yield',main='All')
  abline(v=ec,col=8,lty=1,lwd=.01)
  for(i in 1:ncol(YHat)){
@@ -89,6 +92,7 @@ yHat0<-cbind(1,EC.ns)%*%colMeans(BHat)
  }
  lines(x=sort(ec),y=yHat0[order(ec)],lwd=2,col=4)
 
-#dev.off()
+}
+dev.off()
 
 
