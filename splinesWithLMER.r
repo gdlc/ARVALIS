@@ -72,15 +72,19 @@ rm(list=ls())
   names(msg)=msg0
   print(round(msg,2))      
   
-  write(file=fileOutappend=T,x=msg,ncol=length(msg))
+  write(file=fileOut,append=T,x=msg,ncol=length(msg))
   
 }
+
+close(fileOut)
+
+
 TMP=read.table('logLik_varE.txt',header=T,stringsAsFactors=F)
 
 
 ## 
  significance=.01
- nTests=ncol(W)
+ nTests=nrow(TMP)
  threshold=-log10(significance/nTests)
  
  
@@ -134,7 +138,6 @@ TMP=read.table('logLik_varE.txt',header=T,stringsAsFactors=F)
 
 ## Error Variance
 	
-## SpR
 	propVar=(TMP[,'var_Int']-TMP[,'var_LiF'])/TMP[,'var_Int']
 
 	propVar=(TMP[,'var_Int']-TMP[,'var_SpF'])/TMP[,'var_Int']
@@ -142,6 +145,10 @@ TMP=read.table('logLik_varE.txt',header=T,stringsAsFactors=F)
 	propVar=(TMP[,'var_Int']-TMP[,'var_LiR'])/TMP[,'var_Int']
 
 	propVar=(TMP[,'var_Int']-TMP[,'var_SpR'])/TMP[,'var_Int']
+
+#######################################
+#  Code below here is not being used  #
+#######################################
 
 if(FALSE){
 
