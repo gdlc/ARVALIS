@@ -92,7 +92,7 @@ TMP=read.table('logLik_varE.txt',header=T,stringsAsFactors=F)
  lrtStat=-2*(TMP[,'ll_Int']-TMP[,'ll_LiF'])
  DF=1
  negLogPValue=-log10(pchisq(q=lrtStat,df=DF,lower.tail=F))
- plot(negLogPValue,cex=.2,col=8, main='H0: no covariate, Ha: linear-fixed',ylab='-log10(p-value)')
+ plot(negLogPValue,cex=.4,col=8, main='H0: no covariate, Ha: linear-fixed',ylab='-log10(p-value)')
   abline(h=threshold)
   tmp<-which(negLogPValue>threshold)
   text(labels=colnames(W)[tmp],x=tmp,y=negLogPValue[tmp],cex=.6)
