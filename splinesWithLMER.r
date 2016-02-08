@@ -70,9 +70,15 @@ rm(list=ls())
   fmLiR <-lmer(y~(1|VAR)+(1|LOCxYEAR)+PC.W+ec+(ec-1|VAR),REML=F)
   fmSpR<-lmer( y~(1|VAR)+(1|LOCxYEAR)+PC.W+x1+x2+x3+x4+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
   
-  varB<-as.data.frame(VarCorr(fmSpR))[as.data.frame(VarCorr(fmSpR))[,2]%in%c('x1','x2','x3','x4'),4][4:1]
-  varExp<-crossprod(varX,varB)
+  BHat=as.matrix((coef(fmSpR)$VAR[,c('(Intercept)','x1','x2','x3','x4')]))
+  YHat<-matrix(nrow=length(ec),ncol=nrow(BHat),0)
+  
+  for(j in 1:ncol(YHat)){
+    YHat[,j]<-cbind(1,EC.ns)%*%BHat[j,]
+  }
+  
   BICInt<-BIC(fmInt)
+  varExp<-mean(apply(FUN=var,X=scale(YHat,scale=F,center=T),MARGIN=2))
   msg<-c( logLik(fmInt),logLik(fmLiF),logLik(fmSpF),logLik(fmLiR),logLik(fmSpR),
   	      BICInt-BIC(fmLiF),BICInt-BIC(fmSpF),BICInt-BIC(fmLiR),BICInt-BIC(fmSpR),
   	      varExp
@@ -81,13 +87,8 @@ rm(list=ls())
   print(round(msg,2))      
   
   write(file=fileOut,append=T,x=msg,ncol=length(msg))
-
-  BHat=as.matrix((coef(fmSpR)$VAR[,c('(Intercept)','x1','x2','x3','x4')]))
-  YHat<-matrix(nrow=length(ec),ncol=nrow(BHat),0)
   
-  for(j in 1:ncol(YHat)){
-    YHat[,j]<-cbind(1,EC.ns)%*%BHat[j,]
-  }
+
   
   plot(numeric()~numeric(),xlim=range(ec),ylim=range(YHat),xlab=covName,ylab='Predicted Yield',
       main=paste0('Lines with more than ',nRecordsPrint,' records.'))
@@ -100,47 +101,6 @@ rm(list=ls())
 }
 dev.off()
 close(fileOut)
-
-
-
-
-
-
-
-  # Plots 
-  
-    BHatInt<-as.matrix(coef(fmInt)$VAR)[,1]
-  BHatLinear<-as.matrix(coef(fmLinear)$VAR)[,2:1]
-  BHatSpline<-as.matrix(coef(fmSpline)$VAR)[,1:5]
-
-  YHatInt<-matrix(nrow=length(ec),ncol=nrow(BHatLinear),0)
-  YHatLinear<-YHatInt
-  YHatSpline<-YHatInt
-  
-  
-  for(i in 1:ncol(YHatInt)){
-    YHatSpline[,i]<-cbind(1,EC.ns)%*%BHatSpline[i,]
-  }
-  
-
-  if(plotLines){
-
-		plot(numeric()~numeric(),xlim=range(ec),ylim=range(YHat),xlab=covName,ylab='Predicted Yield',
-      main=paste0('Lines with more than ',nRecordsPrint,' records.'))
- 	abline(v=ec,col=8,lty=1,lwd=.01)
- 	for(i in 1:length(IDs)){
-    	newLine<-which(rownames(BHat)==IDs[i])
-    	lines(x=sort(ec),y=YHat[order(ec),newLine],col=2,lwd=.5)   
- 	}
- 	lines(x=sort(ec),y=rowMeans(YHat)[order(ec)],col=4,lwd=2)
- 	
-   }
-   # end plot NS
-   
-
-
-
-TMP=read.table('logLik_varE.txt',header=T,stringsAsFactors=F)
 
 
 ## 
