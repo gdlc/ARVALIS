@@ -14,6 +14,7 @@ rm(list=ls())
  covNum<-NULL # by default it runs all covariates, otherwise specify a vector in integers
  plotLines<-FALSE
  nRecordsPrint<-100
+ nRecordsUse<-50
 ###
  
  
@@ -35,14 +36,15 @@ rm(list=ls())
  IDs<-names(counts)[which(counts>nRecordsPrint)]
 
  covNames<-colnames(W)
- pdf('plots.pdf')
- fileOut<-file('logLik_varE.txt',open='w') 
+ pdf(paste0('plots_linesWithMoreThan_',nRecordsPrint,'.pdf'))
+ fileOut<-file('stats.txt',open='w') 
  msg0<-c( c('ll_Int','ll_LiF' ,'ll_SpF' ,'ll_LiR' ,'ll_SpR'),
  		 c('BIC_LiF','BIC_SpF','BIC_LiR','BIC_SpR'),
- 		 'varExp'
+ 		 'corIntLi','corIntSp','corLiSp'
  	)
  write(file=fileOut,append=T,x=msg0,ncol=length(msg0))
  if(is.null(covNum)){ covNum=1:ncol(W) } 
+ Z=W
  W=scale(W)
  
 
@@ -70,18 +72,32 @@ rm(list=ls())
   fmLiR <-lmer(y~(1|VAR)+(1|LOCxYEAR)+PC.W+ec+(ec-1|VAR),REML=F)
   fmSpR<-lmer( y~(1|VAR)+(1|LOCxYEAR)+PC.W+x1+x2+x3+x4+(x1-1|VAR)+(x2-1|VAR)+(x3-1|VAR)+(x4-1|VAR),REML=F )
   
-  BHat=as.matrix((coef(fmSpR)$VAR[,c('(Intercept)','x1','x2','x3','x4')]))
-  YHat<-matrix(nrow=length(ec),ncol=nrow(BHat),0)
+  BHatInt<-as.matrix((coef(fmInt)$VAR[,'(Intercept)']))
+  BHatLi<-as.matrix((coef(fmLiR)$VAR[,c('(Intercept)','ec')]))
+  BHatSp=as.matrix((coef(fmSpR)$VAR[,c('(Intercept)','x1','x2','x3','x4')]))
   
-  for(j in 1:ncol(YHat)){
-    YHat[,j]<-cbind(1,EC.ns)%*%BHat[j,]
+  YHatInt<-matrix(nrow=length(ec),ncol=nrow(BHatSp),0)
+  YHatLi<-matrix(nrow=length(ec),ncol=nrow(BHatSp),0)  
+  YHatSp<-matrix(nrow=length(ec),ncol=nrow(BHatSp),0)
+ 
+  for(j in 1:ncol(YHatLi)){
+  	YHatInt[,j]=BHatInt[j]
+    YHatLi[,j]<-cbind(1,ec)%*%BHatLi[j,]	
+    YHatSp[,j]<-cbind(1,EC.ns)%*%BHatSp[j,]
   }
+   
+
+  
+  
   
   BICInt<-BIC(fmInt)
-  varExp<-mean(apply(FUN=var,X=scale(YHat,scale=F,center=T),MARGIN=2))
+  corIntLi<-cor(as.vector(YHatInt),as.vector(YHatLi))
+  corIntSp<-cor(as.vector(YHatInt),as.vector(YHatSp))
+  corLiSp<-cor(as.vector(YHatSp),as.vector(YHatLi))
+  
   msg<-c( logLik(fmInt),logLik(fmLiF),logLik(fmSpF),logLik(fmLiR),logLik(fmSpR),
   	      BICInt-BIC(fmLiF),BICInt-BIC(fmSpF),BICInt-BIC(fmLiR),BICInt-BIC(fmSpR),
-  	      varExp
+  	      corIntLi,corIntSp,corLiSp
   	    )
   names(msg)=msg0
   print(round(msg,2))      
@@ -89,18 +105,26 @@ rm(list=ls())
   write(file=fileOut,append=T,x=msg,ncol=length(msg))
   
 
-  
-  plot(numeric()~numeric(),xlim=range(ec),ylim=range(YHat),xlab=covName,ylab='Predicted Yield',
-      main=paste0('Lines with more than ',nRecordsPrint,' records.'))
- 	abline(v=ec,col=8,lty=1,lwd=.01)
- 	for(i in 1:length(IDs)){
-    	newLine<-which(rownames(BHat)==IDs[i])
-    	lines(x=sort(ec),y=YHat[order(ec),newLine],col=2,lwd=.5)   
+  x=ec*attr(W,"scaled:scale")[i]+attr(W,"scaled:center")[i]
+  plot(numeric()~numeric(),xlim=range(x),ylim=range(YHatSp),xlab=covName,ylab='Predicted Yield',
+       main=paste0(covName,' corIntLi=',round(corIntLi,2),', corLiSp=', round(corLiSp,2)))
+  abline(v=x,col=8,lty=1,lwd=.01)
+ 	
+ 	for(j in 1:length(IDs)){
+    	newLine<-which(rownames(BHatSp)==IDs[j])
+    	lines(x=sort(x),y=YHatSp[order(x),newLine],col=2,lwd=.5)   
  	}
- 	lines(x=sort(ec),y=rowMeans(YHat)[order(ec)],col=4,lwd=2)
+
+ 	lines(x=sort(x),y=rowMeans(YHatSp)[order(x)],col=4,lwd=2)
+
+
 }
 dev.off()
 close(fileOut)
+
+## Model Comparisons
+# Best Model?
+
 
 
 ## 
