@@ -1,3 +1,11 @@
+
+##
+# This module prepare data for: 
+#      (i) fitting the model to a training data set
+#     (ii) deriving predictions for testing data
+##
+
+
 rm(list=ls())
  library(BGLR)
  library(BGData)
@@ -18,29 +26,31 @@ rm(list=ls())
  load(envCovFile)
  load(genFile)
  
- tmp<-names(table(Y$VAR))[table(Y$VAR)>=nMinLines]
- W<-W[Y$VAR%in%tmp,]
- Y<-Y[Y$VAR%in%tmp,]
+ 
+ for(i in 1:5){
+	 tmp<-names(table(Y$VAR))[table(Y$VAR)>=nMinLines]
+ 	W<-W[Y$VAR%in%tmp,]
+ 	Y<-Y[Y$VAR%in%tmp,]
  
  
- tmp<-names(table(Y$ENV))[table(Y$ENV)>=nMinEnv]
- W<-W[Y$ENV%in%tmp,]
- Y<-Y[Y$ENV%in%tmp,]
+ 	tmp<-names(table(Y$ENV))[table(Y$ENV)>=nMinEnv]
+ 	W<-W[Y$ENV%in%tmp,]
+ 	Y<-Y[Y$ENV%in%tmp,]
  
  
- tmp=rownames(X)%in%Y$VAR
- X<-X[tmp,]
+ 	tmp=rownames(X)%in%Y$VAR
+ 	X<-X[tmp,]
+ }
  
- ## Removing markers with too many NAs or MAF<3%
+  
+ ## Removing markers with more than 5% of NAs or MAF<3%
  
   tmp=apply(FUN=function(x) mean(is.na(x)), MARGIN=2,X=X)
   X<-X[,tmp<.05]
   tmp=colMeans(X,na.rm=T)/2
   maf<-ifelse(tmp>.5,1-tmp,tmp)
   X<-X[,maf>.03]
-  
-  
-  
+ 
  
  ## Centers and scales are saved to be used in predictions
   sdX<-apply(X=X,MARGIN=2,FUN=sd,na.rm=T)*sqrt((nrow(X)-1)/nrow(X))
@@ -64,17 +74,28 @@ rm(list=ls())
 	X[,i]=xi
 	print(i)
   }
+  
+  save(X,file='X.RData')
+  save(W,file='W.RData')
+  save(Y,file='Y.RData')
+  
   G<-tcrossprod(X)
   G<-G/mean(diag(G))
 
   EVD.G<-eigen(G)
   EVD.G$vectors=EVD.G$vectors[,EVD.G$values>1e-5]
   EVD.G$values=EVD.G$values[EVD.G$values>1e-5]
-
+  save(EVD.G,file='EVD_G.RData')
+  
+  
   ## continue here
   PC.G<-EVD.G$vectors
+  rownames(PC.G)<-rownames(G)
   for(i in 1:ncol(PC.G)){ PC.G[,i]<-PC.G[,i]*sqrt(EVD.G$values[i]) }
-
+  save(PC.G,file='PC_G.RData')
+  
+  
+  
   TMP<-EVD.G$vectors; for(i in 1:ncol(EVD.G$vectors)){ TMP[,i]=TMP[,i]/sqrt(EVD.G$values[i]) }
   
   GInv<-tcrossprod(TMP)
@@ -93,10 +114,10 @@ rm(list=ls())
   EVD.OG$vectors=EVD.OG$vectors[,EVD.OG$values>1e-5]
   EVD.OG$values=EVD.OG$values[EVD.OG$values>1e-5]
 
-  ## continue here
   PC.OG<-EVD.OG$vectors
   for(i in 1:ncol(PC.OG)){ PC.OG[,i]<-PC.OG[,i]*sqrt(EVD.OG$values[i]) }
-
+  save(PC.OG,file='PC_OG.RData')
+  
   TMP<-EVD.OG$vectors; for(i in 1:ncol(EVD.OG$vectors)){ TMP[,i]=TMP[,i]/sqrt(EVD.OG$values[i]) }
   
   OGInv<-tcrossprod(TMP)
