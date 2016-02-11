@@ -1,7 +1,9 @@
-``R
-##
-# Module 2: Model fitting
-##
+
+
+## Module 2: Model fitting
+
+
+```R
 
 
 rm(list=ls())
@@ -50,7 +52,7 @@ rm(list=ls())
   fm=BGLR(y=Y$rdt,ETA=ETA,nIter=nIter,burnIn=burnIn)
   save(fm,file='fm.RData')
 
-``R
+```R
 
 ** Post-hoc ***
 
