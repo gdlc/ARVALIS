@@ -92,8 +92,6 @@ rm(list=ls())
   PC.G<-EVD.G$vectors
   rownames(PC.G)<-rownames(G)
   for(i in 1:ncol(PC.G)){ PC.G[,i]<-PC.G[,i]*sqrt(EVD.G$values[i]) }
-  save(PC.G,file='PC_G.RData')
-  
   
   
   TMP<-EVD.G$vectors; for(i in 1:ncol(EVD.G$vectors)){ TMP[,i]=TMP[,i]/sqrt(EVD.G$values[i]) }
@@ -102,27 +100,27 @@ rm(list=ls())
    
   save(G,GInv,file='G_GInv.RData')
 
-  O<-tcrossprod(W)
+  WW<-tcrossprod(W)
  
   ID.VAR.NUM<-as.integer(factor(x=Y$VAR,ordered=T,levels=rownames(G)))
   stopifnot( all.equal(rownames(G)[ID.VAR.NUM],Y$VAR))
   
   ZGZ<-G[ID.VAR.NUM,ID.VAR.NUM]
-  OG<-O*ZGZ
+  GW<-WW*ZGZ
 
-  EVD.OG<-eigen(OG)
-  EVD.OG$vectors=EVD.OG$vectors[,EVD.OG$values>1e-5]
-  EVD.OG$values=EVD.OG$values[EVD.OG$values>1e-5]
+  EVD.GW<-eigen(GW)
+  EVD.GW$vectors=EVD.GW$vectors[,EVD.GW$values>1e-5]
+  EVD.GW$values=EVD.GW$values[EVD.GW$values>1e-5]
 
-  PC.OG<-EVD.OG$vectors
-  for(i in 1:ncol(PC.OG)){ PC.OG[,i]<-PC.OG[,i]*sqrt(EVD.OG$values[i]) }
-  save(PC.OG,file='PC_OG.RData')
+  PC.GW<-EVD.GW$vectors
+  for(i in 1:ncol(PC.GW)){ PC.GW[,i]<-PC.GW[,i]*sqrt(EVD.GW$values[i]) }
+  save(PC.GW,file='PC_GW.RData')
   
-  TMP<-EVD.OG$vectors; for(i in 1:ncol(EVD.OG$vectors)){ TMP[,i]=TMP[,i]/sqrt(EVD.OG$values[i]) }
+  TMP<-EVD.GW$vectors; for(i in 1:ncol(EVD.GW$vectors)){ TMP[,i]=TMP[,i]/sqrt(EVD.GW$values[i]) }
   
-  OGInv<-tcrossprod(TMP)
+  GWInv<-tcrossprod(TMP)
   
-  save(OG,OGInv,file='OG_OGInv.RData')
+  save(GW,GWInv,file='GW_GWInv.RData')
 
   
   
