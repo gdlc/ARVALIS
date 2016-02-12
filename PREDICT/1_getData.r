@@ -98,7 +98,7 @@ rm(list=ls())
   
   GInv<-tcrossprod(TMP)
    
-  save(G,GInv,file='G_GInv.RData')
+  save(GInv,file='GInv.RData')
 
   WW<-tcrossprod(W)
  
@@ -120,7 +120,7 @@ rm(list=ls())
   
   GWInv<-tcrossprod(TMP)
   
-  save(GW,GWInv,file='GW_GWInv.RData')
+  save(GWInv,file='GWInv.RData')
 
   
   

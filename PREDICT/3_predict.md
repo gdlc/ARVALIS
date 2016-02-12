@@ -16,7 +16,7 @@ rm(list=ls())
  trnEnvCov<-'/Users/gustavodeloscampos/ARVALIS/predict/output/W.RData'
  trnGeno<-'/Users/gustavodeloscampos/ARVALIS/predict/output/X.RData'
  trnPheno<-'/Users/gustavodeloscampos/ARVALIS/predict/output/Y.RData'
- trnPCG<-
+ trnEVDG<-'/Users/gustavodeloscampos/ARVALIS/predict/output/EVD_G.RData'
  trnPCGW<-
  
  tstEnvCov<-'/Users/gustavodeloscampos/ARVALIS/predict/newData/W2.RData'
