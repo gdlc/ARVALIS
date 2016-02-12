@@ -38,7 +38,7 @@ rm(list=ls())
   ZPC.G<-PC.G[ID.VAR.NUM,]
   
   Z.YEAR=as.matrix(model.matrix(~factor(Y$YEAR))[,-1])
-  Z.LOC=as.matrix(model.matrix(~factor(Y$YEAR))[,-1])
+  Z.LOC=as.matrix(model.matrix(~factor(Y$LOC))[,-1])
   Z.YEARxLOC=as.matrix(model.matrix(~factor(paste(Y$YEAR,Y$LOC,sep='-')))[,-1])
   
   ETA=list(
