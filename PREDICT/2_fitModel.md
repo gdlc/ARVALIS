@@ -11,8 +11,8 @@ rm(list=ls())
  library(BGData)
  
 ## Change parameters here
- nIter=1200
- burnIn=200
+ nIter=230000
+ burnIn=30000
  outputFolder='/Users/gustavodeloscampos/ARVALIS/predict/output'
  phenotypeFile<-'/Users/gustavodeloscampos/ARVALIS/predict/output/Y.RData'
  envCovFile<-'/Users/gustavodeloscampos/ARVALIS/predict/output/W.RData'
@@ -42,7 +42,7 @@ rm(list=ls())
   Z.YEARxLOC=as.matrix(model.matrix(~factor(paste(Y$YEAR,Y$LOC,sep='-')))[,-1])
   
   ETA=list(
-  			year=list(X=Z.YEAR,model='FIXED'),
+  			year=list(X=Z.YEAR,model='BRR'),
   			loc=list(X=Z.LOC,model='BRR'),
   			yearLoc=list(X=Z.YEARxLOC,model='BRR'),
             G=list(X=ZPC.G,model='BRR'),
@@ -50,10 +50,9 @@ rm(list=ls())
             GW=list(X=PC.GW,model='BRR')
   		  )
   fm=BGLR(y=Y$rdt,ETA=ETA,nIter=nIter,burnIn=burnIn)
-  
-  
-  
   save(fm,file='fm.RData')
+
+
 
 ```R
 
