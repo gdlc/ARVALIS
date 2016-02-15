@@ -5,7 +5,6 @@
 
 ```R
 
-
 rm(list=ls())
  library(BGLR)
  library(BGData)
@@ -41,26 +40,22 @@ rm(list=ls())
  load(trnScalesAndMeans)
  load(trnGInv); rm(G)
  load(trnGWInv); rm(GW)
- 
- 
  load(tstEnvCov)
  load(tstGeno)
  load(tstPheno)
 
  
- 
  ## Intercept
    yHat=rep(fm$mu,nrow(Y2))
- 
  ## Add location effect
+   for(i in 1:length(yHat)){   yHat=yHat+fm$loc$b[grep(x=names(fm$loc$b),pattern=Y$LOC)] }
    
- 
  ## Add genotype effect
    # Compute G21
    tmp<-which(colnames(X2)%in%colnames(X))
    X2=X2[,tmp]
    G21<-tcrossprod(X2,X)/sqrt(ncol(X))
-   
+   uHat=G21%*%GInv%*%PC.G%*%fm$G$b
  
  ## Add env. covariate effects
  
