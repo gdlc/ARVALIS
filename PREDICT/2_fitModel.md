@@ -55,34 +55,3 @@ rm(list=ls())
 
 
 ```R
-
-** The code below is currently not used. ***
-
-```R
-
-  BYear=as.matrix(read.table('ETA_year_b.dat',header=T))
-  BLoc=readBinMat('ETA_loc_b.bin')
-  BYearLoc=readBinMat('ETA_yearLoc_b.bin')
-  BG=readBinMat('ETA_G_b.bin')
-  BW=readBinMat('ETA_W_b.bin')
-  BGW=readBinMat('ETA_GW_b.bin')
-   
-  yHatYear=Z.YEAR%*%t(BYear)
-   plot(apply(X=yHatYear,MARGIN=2,FUN=var))
-  
-  yHatLoc=Z.LOC%*%t(BLoc)
-   plot(apply(X=yHatLoc,MARGIN=2,FUN=var))
-
-  yHatYearLoc=Z.YEARxLOC%*%t(BYearLoc)
-   plot(apply(X=yHatYearLoc,MARGIN=2,FUN=var))
-  
-  yHatG=ZPC.G%*%t(BG)
-   plot(apply(X=yHatG,MARGIN=2,FUN=var))
-  
-  yHatW=W%*%t(BW)
-   plot(apply(X=yHatW,MARGIN=2,FUN=var))
-  
-  yHatGW<-tcrossprod(PC.GW,BGW)
-  
-    plot(apply(X=yHatGW,MARGIN=2,FUN=var))
-```
