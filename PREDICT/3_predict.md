@@ -107,3 +107,18 @@ timeIn<-proc.time()
 timeEnd<-proc.time()
   
  ```
+ 
+ getCor<-function(y,yHat,INDEX){
+ 	counts=table(INDEX)
+ 	COR<-rep(NA,nrow(counts))
+ 	for(i in 1:nrow(counts)){
+ 		tmp<-INDEX==names(counts)[i] ;
+ 		COR[i]=cor(y[tmp],yHat[tmp]) ;
+ 	}
+    OUT=cbind(counts,COR)
+    return(OUT)
+ }
+ COR=getCor(Y2$rdt,yHat,Y2$LOC)
+ pdf('correlations.pdf')
+   plot(x=COR[,1],y=COR[,2],xlab='Number of Records',ylab='Within Location Correlation',main=paste('Across Loc. Correlation=',round(cor(yHat,Y2$rdt),2)))
+ dev.off()
