@@ -112,6 +112,7 @@ timeEnd<-proc.time()
  
  ### Computing Correlations
  
+ 
  ```R
  getCor<-function(y,yHat,INDEX){
  	counts=table(INDEX)
