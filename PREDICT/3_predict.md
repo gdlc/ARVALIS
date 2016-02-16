@@ -6,11 +6,9 @@
 ### Computing Predictions
 
 ```R
-
 rm(list=ls())
 
 timeIn<-proc.time()
-
  library(BGLR)
  library(BGData)
  
@@ -110,7 +108,12 @@ timeEnd<-proc.time()
   
  ```
  
- ### Computing Correlations
+
+
+
+### Computing Predictions
+
+
  
  
  ```R
@@ -138,6 +141,6 @@ timeEnd<-proc.time()
      lines(y=rep(mean(COR[COR[,1]>50,2]),2),x=c(50,150))
  dev.off()
  
- ```
+```
  
  
