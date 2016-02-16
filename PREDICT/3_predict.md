@@ -118,7 +118,19 @@ timeEnd<-proc.time()
     OUT=cbind(counts,COR)
     return(OUT)
  }
+
  COR=getCor(Y2$rdt,yHat,Y2$LOC)
+ COR=COR[!is.na(COR[,2]),]
+ 
  pdf('correlations.pdf')
-   plot(x=COR[,1],y=COR[,2],xlab='Number of Records',ylab='Within Location Correlation',main=paste('Across Loc. Correlation=',round(cor(yHat,Y2$rdt),2)))
+    plot(Y2$rdt~yHat,col=as.integer(factor(Y2$LOC)),cex=.5,ylab='Observed Yield',xlab='Predicted Yield',main=paste0('Correlation=',round(cor(yHat,Y2$rdt),3),'.'));
+      abline(v=mean(yHat),lty=2,cex=2,col='white'); abline(v=mean(yHat),lty=2)
+      abline(h=mean(Y2$rdt),lty=2,cex=2,col='white'); abline(h=mean(Y2$rdt),lty=2)
+      abline(a=0,b=1,lwd=4,col='white');abline(a=0,b=1,col=1)      
+      
+     plot(x=COR[,1],y=COR[,2],xlab='Number of Records',ylab='Within Location Correlation',main=paste('Across Loc. Correlation=',round(cor(yHat,Y2$rdt),2)))
+     lines(y=rep(mean(COR[COR[,1]>50,2]),2),x=c(50,150))
  dev.off()
+ 
+ 
+ 
