@@ -1,7 +1,9 @@
 
 
-## Module 2: Model fitting
+## Module 3: Prediction
 
+
+### Computing Predictions
 
 ```R
 
@@ -108,6 +110,9 @@ timeEnd<-proc.time()
   
  ```
  
+ ### Computing Correlations
+ 
+ ```R
  getCor<-function(y,yHat,INDEX){
  	counts=table(INDEX)
  	COR<-rep(NA,nrow(counts))
@@ -132,5 +137,6 @@ timeEnd<-proc.time()
      lines(y=rep(mean(COR[COR[,1]>50,2]),2),x=c(50,150))
  dev.off()
  
+ ```
  
  
