@@ -111,7 +111,7 @@ timeEnd<-proc.time()
 
 
 
-### Computing Predictions
+### Computing Correlations
 
 
  
