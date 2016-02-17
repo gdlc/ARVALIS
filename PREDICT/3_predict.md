@@ -20,15 +20,16 @@ timeIn<-proc.time()
  trnEVDG<-'/Users/gustavodeloscampos/ARVALIS/predict/output/EVD_G.RData'
  trnPC.G<-'/Users/gustavodeloscampos/ARVALIS/predict/output/PC_G.RData'
  trnPC.GW<-'/Users/gustavodeloscampos/ARVALIS/predict/output/PC_GW.RData'
+ trnScalesAndMeans<-'/Users/gustavodeloscampos/ARVALIS/predict/output/meansAndSDs.RData'
+ trnGInv<-'/Users/gustavodeloscampos/ARVALIS/predict/output/G_GInv.RData'
+ trnGWInv<-'/Users/gustavodeloscampos/ARVALIS/predict/output/GW_GWInv.RData'
  
  tstEnvCov<-'/Users/gustavodeloscampos/ARVALIS/predict/newData/W2.RData'
  tstGeno<-'/Users/gustavodeloscampos/ARVALIS/predict/newData/X2.RData'
  tstPheno<-'/Users/gustavodeloscampos/ARVALIS/predict/newData/Y2.RData'
  
  
- trnScalesAndMeans<-'/Users/gustavodeloscampos/ARVALIS/predict/output/meansAndSDs.RData'
- trnGInv<-'/Users/gustavodeloscampos/ARVALIS/predict/output/G_GInv.RData'
- trnGWInv<-'/Users/gustavodeloscampos/ARVALIS/predict/output/GW_GWInv.RData'
+
 ###
  
  
