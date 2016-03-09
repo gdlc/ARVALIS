@@ -5,7 +5,7 @@
   inputFolder='/Users/gustavodeloscampos/Dropbox/arvalis/PIPELINES_2014/input/'
   outputFolder='/Users/gustavodeloscampos/WORK/ARVALIS/outputsGitHub/full_data_models/'
 
-  nIter=1200; burnIn=200
+  nIter=1200; burnIn=200 #use many more iterations, this is just for testing the code.
  ###
  library(BGLR)
  
