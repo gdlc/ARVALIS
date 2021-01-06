@@ -4,7 +4,7 @@ This repository present a set of modules for analysis of data from multi-environ
 
 **Contact**:  Gustavo de los Campos [ gdeloscampos@gmail.com ] &  Marco Lopez-Cruz [ malctony@hotmail.com ]
 
-#####Before you start
+#### Before you start
 
 The modules are based on R (>=3.1.0 [download](http://cran.r-project.org)). Before you start, be sure to install the packages [BGLR](http://cran.r-project.org/web/packages/BGLR/index.html) and [lme4](http://cran.r-project.org/web/packages/lme4/index.html).
 
@@ -14,7 +14,8 @@ The modules are based on R (>=3.1.0 [download](http://cran.r-project.org)). Befo
 ```
 
 
-###\## Modules:
+##### Modules:
+
 * [Module 0: Preparing inputs](https://github.com/gdlc/ARVALIS/blob/master/getInputs.md)
 * [Module 1: Variance Components (lmer)](https://github.com/gdlc/ARVALIS/blob/master/varComp_lmer.md)
 * [Module 2: Variance Components (BGLR)](https://github.com/gdlc/ARVALIS/blob/master/varComp_bglr.md)
