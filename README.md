@@ -24,4 +24,4 @@ The modules are based on R (>=3.1.0 [download](http://cran.r-project.org)). Befo
 * [Module 5: Cross-validation](https://github.com/gdlc/ARVALIS/blob/master/training_testing.md)
 * [Module 6: Splines with lme4 ](https://github.com/gdlc/ARVALIS/blob/master/splinesWithLMER.r)
 * [Module 7: Splines with BGLR (includes markers)]()
-* [Moudle 8: Simulations]()
+* [Moudle 8: Simulation Manuscript](https://www.nature.com/articles/s41467-020-18480-y)
